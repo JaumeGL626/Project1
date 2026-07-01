@@ -1,18 +1,15 @@
 package com.example.demo.entity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import com.example.demo.enums.Role;
+import jakarta.persistence.*;
+import lombok.*;
 
 
 @Entity
 @Getter
 @Setter
 @Builder
-
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +18,7 @@ public class User {
     private String password;
     private String email;
     private String description;
-    //private Role role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
 }
