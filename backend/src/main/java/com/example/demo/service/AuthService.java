@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.LoginRequest;
+import com.example.demo.dto.LoginResponse;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,11 +20,11 @@ public class AuthService {
         this.passwordEncoder=passwordEncoder;
     }
 
-    @Transactional
+    @Transactional (readOnly = true)
     public LoginResponse login (LoginRequest request){
         User user= userRepository.findByEmail(request.email())
                 .orElseThrow(()-> new RuntimeException("Email inexistent"));
-        if( passwordEncoder.matches( request.password(),user.getPassword())){
+        if(! passwordEncoder.matches( request.password(),user.getPassword())){
             throw new RuntimeException("Contrasenya Erronea");
         }
         return new LoginResponse(
