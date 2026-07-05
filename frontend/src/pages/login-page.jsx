@@ -2,6 +2,7 @@ import {useState } from 'react'
 function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError]=useState("")
 
     function handleUsername(e){
         setEmail(e.target.value);
@@ -9,6 +10,7 @@ function LoginPage() {
     function handlePassword(e){
         setPassword(e.target.value);
     }
+
     function handleSubmit(e){
         e.preventDefault();
         const requestOptions={
@@ -20,8 +22,24 @@ function LoginPage() {
             })
         };
         fetch("http://localhost:8080/api/auth/login", requestOptions)
-        .then(response=> response.json())
-        .then(data=>console.log(data));
+        .then(response=> {
+            if(!response.ok){
+                throw new Error("Usuari o contrasenya incorrectes");
+            }
+            setError("");
+            return response.json();
+        })
+        .then(loginResponse=>{
+
+            console.log(loginResponse);
+            localStorage.setItem("token", loginResponse.token);
+
+        })
+        .catch(error => {
+                 setError(error.message);
+        })
+        ;
+       
         
     }
 
@@ -39,6 +57,7 @@ function LoginPage() {
                     <label htmlFor="password">Password: </label>
                     <input id="password" type="password"value={password} onChange={handlePassword} />
                 </div>
+                {error && <p className="error">{error}</p>}
                 <button type="submit"> 
                     Login
                 </button>
