@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/api/user")
+@RequestMapping(path = "/api/users")
 public class UserController {
 
     private final UserService userService;
@@ -24,8 +24,8 @@ public class UserController {
 
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<UserProfileDto> getPublicProfile(@PathVariable Long userId){
-        UserProfileDto userProfileDto= userService.getPublicProfile(userId);
+    public ResponseEntity<UserProfileDto> getPublicProfile(@PathVariable Long id){
+        UserProfileDto userProfileDto= userService.getPublicProfile(id);
         return ResponseEntity.ok(userProfileDto);
     }
     @GetMapping(path="/me")
