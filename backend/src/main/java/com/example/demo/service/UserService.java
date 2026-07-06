@@ -6,8 +6,10 @@ import com.example.demo.mapper.UserMapper;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.security.JwtService;
 import org.hibernate.service.spi.ServiceException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class UserService {
@@ -23,14 +25,32 @@ public class UserService {
     }
     @Transactional (readOnly = true)
     public UserProfileDto getPublicProfile (Long userId){
-        User user= userRepository.findById(userId).orElseThrow(()-> new ServiceException("Usuari inexistent"));
-        return userMapper.userToUserProfileDto(user);
+        User user= userRepository.findById(userId).orElseThrow(()-> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "User not found"
+        ));
+        return new UserProfileDto(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getDescription(),
+                user.getRole()
+        );
     }
 
     @Transactional(readOnly = true)
     public UserProfileDto getProfile(String email){
-        User user= userRepository.findByEmail(email).orElseThrow(()-> new RuntimeException("usari inexistent"));
-        return userMapper.userToUserProfileDto(user);
+        User user= userRepository.findByEmail(email).orElseThrow(()-> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "User not found"
+        ));
+        return new UserProfileDto(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getDescription(),
+                user.getRole()
+        );
 
 
     }
