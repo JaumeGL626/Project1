@@ -6,17 +6,17 @@ function HomePage() {
 
     const navigate = useNavigate();
 
-    function handleUserProfie(){
+    function handleUserProfile(){
         navigate("/profile")
     }
 
 
     return (
          <>
-            <header>
+            <header className="headerHomePage">
                 <h2>Home</h2>
                 <div className="iconUserCircle">
-                    <CircleUser onClick={handleUserProfie}/>
+                    <CircleUser onClick={handleUserProfile}/>
 
                 </div>
             </header>
