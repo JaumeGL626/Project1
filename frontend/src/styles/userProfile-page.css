@@ -1,0 +1,62 @@
+.header{
+    margin-top: 30px;
+    font-size: 30px;
+    text-align: left;
+    align-items: center;
+    width: 100%;
+    padding-left: 70px;
+
+}
+
+.profileFullContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    padding-left: 50px;
+    margin-top: 80px;
+    
+}
+
+
+.userInfromation{
+    align-content: space-between;
+    
+   
+}
+
+.otherContainer{
+    padding-right: 100px;
+  
+}
+
+.user-name{
+    font-size: 30px;
+    margin-bottom: 15px;
+    
+}
+
+.user-email{
+    margin-bottom: 15px;
+    border-bottom: 1px solid black;
+    
+}
+.user-description{
+    margin-bottom: 15px;
+    border-bottom: 1px solid black;
+}
+
+.user-study{
+    margin-bottom: 15px;
+    border-bottom: 1px solid black;
+}
+
+.user-role{
+    margin-bottom: 15px;
+    font-style: italic;
+    border-bottom: 1px solid black;
+}
+.editProfile{
+    width: 100%;
+}

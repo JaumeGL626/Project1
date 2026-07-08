@@ -1,12 +1,12 @@
 import {useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import { CircleUser} from 'lucide-react'
-
+import "../styles/userProfile-page.css"
 
 function UserProfilePage(){
 
    const [user,setUser]=useState("");
-   const [error,setError]=useState("");
+   const [error, setError]=useState("");
 
    useEffect(()=> {
         const token= localStorage.getItem("token");
@@ -28,7 +28,11 @@ function UserProfilePage(){
         .then(data=>{
             setUser(data);
             console.log(data);
-        });
+        })
+        .catch(error => {
+                 setError(error.message);
+        })
+        ;
          
    },[]);
    
@@ -36,22 +40,35 @@ function UserProfilePage(){
 
     return(
         <>
-            <h1>Profile</h1>
-            {user &&(
-                <>
+            
+            <header className='header'>My Profile</header>
 
-                    <div className="iconUserCircle">
-                        <CircleUser/>
-                    </div>
+            <div className="profileFullContainer">
 
-                    <strong> <p> {user.username} </p> </strong>
-                    <p> {user.email} </p>
-                    <p> Grau Estudi:</p>
-                    <p>{user.description} </p>
-                    <p>{user.role}</p>
+                <section className="userInfromation">
+                    {user &&(
+                        <>       
+                            <CircleUser size={220}/>
+                        
+                            <p className="user-name"><strong> {user.username}</strong> </p>
+                            <p className="user-email"> {user.email} </p>
+                            <p className='user-study'> Grau Estudi:</p>
+                            <p className='user-description'>{user.description} </p>
+                            <p className='user-role'>{user.role} </p>
 
-                </>
-            )}
+                            <button className='editProfile'> Editar Perfil</button>
+                            
+
+                        </>
+                    )}
+                
+                </section>
+
+                <aside className="otherContainer">
+                    <p>Aqui va el horari</p>
+                </aside>
+
+            </div>
         </>
     )
 }
