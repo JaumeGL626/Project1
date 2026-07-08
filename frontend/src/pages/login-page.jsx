@@ -1,4 +1,5 @@
 import {useState } from 'react'
+import '../styles/login-page.css'
 function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -46,18 +47,20 @@ function LoginPage() {
     
     return(
         <>
-            <h1> Login</h1>
+            <header> Login to UDG</header>
 
             <form  onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="username">Email: </label>
+                <div className="userLabel">
+                    <label htmlFor="username">Email </label>
                     <input id="email" type="text" value={email} onChange={handleUsername} />
                 </div>
-                <div>
-                    <label htmlFor="password">Password: </label>
+                <div className="passwordLabel">
+                    <label htmlFor="password">Password </label>
                     <input id="password" type="password"value={password} onChange={handlePassword} />
                 </div>
+
                 {error && <p className="error">{error}</p>}
+
                 <button type="submit"> 
                     Login
                 </button>
