@@ -1,9 +1,11 @@
 import {useState } from 'react'
+import { useNavigate } from "react-router-dom";
 import '../styles/login-page.css'
 function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError]=useState("")
+    const navigate = useNavigate();
 
     function handleUsername(e){
         setEmail(e.target.value);
@@ -34,6 +36,7 @@ function LoginPage() {
 
             console.log(loginResponse);
             localStorage.setItem("token", loginResponse.token);
+            navigate("/home");
 
         })
         .catch(error => {
