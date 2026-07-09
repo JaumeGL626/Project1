@@ -29,13 +29,7 @@ public class UserService {
                 HttpStatus.NOT_FOUND,
                 "User not found"
         ));
-        return new UserProfileDto(
-                user.getId(),
-                user.getUsername(),
-                user.getEmail(),
-                user.getDescription(),
-                user.getRole()
-        );
+        return userMapper.userToUserProfileDto(user);
     }
 
     @Transactional(readOnly = true)
@@ -44,13 +38,7 @@ public class UserService {
                 HttpStatus.NOT_FOUND,
                 "User not found"
         ));
-        return new UserProfileDto(
-                user.getId(),
-                user.getUsername(),
-                user.getEmail(),
-                user.getDescription(),
-                user.getRole()
-        );
+        return userMapper.userToUserProfileDto(user);
 
 
     }
