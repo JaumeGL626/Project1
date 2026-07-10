@@ -41,6 +41,9 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testAnnotationProcessor 'org.projectlombok:lombok'
 
+
+	implementation 'com.cloudinary:cloudinary-http5:2.4.0'
+
 }
 
 tasks.named('test') {
