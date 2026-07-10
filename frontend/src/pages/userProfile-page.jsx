@@ -1,12 +1,14 @@
 import {useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import { CircleUser} from 'lucide-react'
-import "../styles/userProfile-page.css"
+import "../styles/userProfile-page.css";
+
 
 function UserProfilePage(){
 
    const [user,setUser]=useState("");
    const [error, setError]=useState("");
+   const navigate=useNavigate("");
 
    useEffect(()=> {
         const token= localStorage.getItem("token");
@@ -35,6 +37,12 @@ function UserProfilePage(){
         ;
          
    },[]);
+
+   function handleLogout(){
+    localStorage.removeItem("token");
+    navigate("/login")
+
+   }
    
 
 
@@ -57,6 +65,7 @@ function UserProfilePage(){
                             <p className='user-role'>{user.role} </p>
 
                             <button className='editProfile'> Editar Perfil</button>
+                            <button className='logout' onClick={handleLogout}> Tancar Sessio</button>
                             
 
                         </>
