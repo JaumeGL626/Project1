@@ -6,6 +6,7 @@ import heroImg from './assets/hero.png'
 import LoginPage  from './pages/login-page'
 import './App.css'
 import HomePage from "./pages/home-page";
+import UserProfilePage from "./pages/userProfile-page";
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<LoginPage />} />
                 <Route path="/home" element={<HomePage />} />
+                <Route path="/profile" element={<UserProfilePage/>}/>
             </Routes>
         </BrowserRouter>
     );
