@@ -47,6 +47,7 @@ public class DevDataSeeder implements CommandLineRunner {
                 .password(passwordEncoder.encode("1234"))
                 .description("Soc un nen que esstudia GEINF a la UDG")
                 .role(Role.USER)
+                .profilePicture("https://res.cloudinary.com/swafuttr/image/upload/v1783977983/best-profile-pictures-2h94ge4qz9y05dbw_t8nika.jpg")
                 .build();
         userRepository.save(user1);
     }

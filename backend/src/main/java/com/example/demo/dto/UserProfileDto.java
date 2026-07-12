@@ -7,7 +7,8 @@ public record UserProfileDto(
          String username,
          String email,
          String description,
-         Role role
+         Role role,
+         String profilePicture
 ) {
 
 }
