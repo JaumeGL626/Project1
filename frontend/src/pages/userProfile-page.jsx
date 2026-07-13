@@ -54,11 +54,20 @@ function UserProfilePage(){
             <div className="profileFullContainer">
 
                 <section className="userInfromation">
-                    {user &&(
-                        <>       
-                            <CircleUser size={220}/>
-                        
-                            <p className="user-name"><strong> {user.username}</strong> </p>
+
+
+                    {user && user.profilePicture ? (
+                        <img 
+                            src={user.profilePicture} 
+                            alt={`PrilePicture${user.username}`} 
+                           
+                            className="profilePictureImg"
+                        />
+                    ) : (
+                        <CircleUser size={200} />
+                    )}
+
+                    <p className="user-name"><strong> {user.username}</strong> </p>
                             <p className="user-email"> {user.email} </p>
                             <p className='user-study'> Grau Estudi:</p>
                             <p className='user-description'>{user.description} </p>
@@ -66,10 +75,9 @@ function UserProfilePage(){
 
                             <button className='editProfile'> Editar Perfil</button>
                             <button className='logout' onClick={handleLogout}> Tancar Sessio</button>
-                            
 
-                        </>
-                    )}
+                    
+
                 
                 </section>
 
