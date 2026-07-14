@@ -1,11 +1,14 @@
-import {useState } from 'react'
+import {useContext, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import '../styles/login-page.css'
+import { CurrentUserContex } from '../components/userContext';
 function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError]=useState("");
     const navigate = useNavigate();
+
+    const {updateUser}=useContext(CurrentUserContex);
 
     function handleUsername(e){
         setEmail(e.target.value);
@@ -15,6 +18,7 @@ function LoginPage() {
     }
 
     function handleSubmit(e){
+
         e.preventDefault();
         const requestOptions={
             method:"POST",
@@ -36,6 +40,7 @@ function LoginPage() {
 
             console.log(loginResponse);
             localStorage.setItem("token", loginResponse.token);
+            updateUser(loginResponse);
             navigate("/home");
 
         })

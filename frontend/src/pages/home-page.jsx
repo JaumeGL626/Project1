@@ -1,48 +1,23 @@
 import { CircleUser} from 'lucide-react';
-import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import { useContext } from 'react';
+import { CurrentUserContex } from '../components/userContext';
 import '../styles/home-page.css'
 
 function HomePage() {
 
+    const {user,loading} =useContext(CurrentUserContex);
     const navigate = useNavigate();
-    const [user,setUser]=useState("");
-    const [error, setError]=useState("");
-
 
     function handleUserProfile(){
         navigate("/users/profile")
     }
 
-   
-    
-       useEffect(()=> {
-            const token= localStorage.getItem("token");
-    
-            fetch("http://localhost:8080/api/users/me", {
-                headers:{
-                    Authorization: `Bearer ${token}`
-                }
-            })
-            .then(response=>{
-                if(! response.ok){
-                    throw new Error("Error al cargar perfil");
-                }
-                setError("");
-                return response.json();
-                    
-    
-            })
-            .then(data=>{
-                setUser(data);
-                console.log(data);
-            })
-            .catch(error => {
-                     setError(error.message);
-            })
-            ;
-             
-       },[]);
+    if(loading){
+        return<>
+               <h3> Loading </h3>
+              </> 
+    }
 
 
     return (
