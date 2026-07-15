@@ -1,6 +1,7 @@
 
 package com.example.demo.controller;
 
+import com.example.demo.dto.UserEditProfileDto;
 import com.example.demo.dto.UserProfileDto;
 import com.example.demo.entity.User;
 import com.example.demo.security.JwtService;
@@ -35,6 +36,16 @@ public class UserController {
         UserProfileDto userProfileDto =userService.getProfile(email);
         return ResponseEntity.ok(userProfileDto);
     }
+
+    @PutMapping(path = "/me")
+    public ResponseEntity<UserProfileDto> editProfile(@RequestHeader ("Authorization") String authHeader, @Valid @RequestBody UserEditProfileDto request){
+        String token= authHeader.replace("Bearer ","");
+        String email= jwtService.extractUsername(token);
+        UserProfileDto userProfileDto=userService.editProfile(email, request);
+        return ResponseEntity.ok(userProfileDto);
+
+    }
+
 
 
 
