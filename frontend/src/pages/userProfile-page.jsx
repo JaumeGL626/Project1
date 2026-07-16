@@ -1,45 +1,23 @@
-import {useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import { CircleUser} from 'lucide-react'
 import "../styles/userProfile-page.css";
-
-
+import { CurrentUserContex } from "../components/userContext";
+import { useContext } from "react";
 function UserProfilePage(){
 
-   const [user,setUser]=useState("");
-   const [error, setError]=useState("");
-   const navigate=useNavigate("");
+   const navigate=useNavigate();
+   const {user,loading,updateUser}=useContext(CurrentUserContex);   
 
-   useEffect(()=> {
-        const token= localStorage.getItem("token");
-
-        fetch("http://localhost:8080/api/users/me", {
-            headers:{
-                Authorization: `Bearer ${token}`
-            }
-        })
-        .then(response=>{
-            if(! response.ok){
-                throw new Error("Error al cargar perfil");
-            }
-            setError("");
-            return response.json();
-                
-
-        })
-        .then(data=>{
-            setUser(data);
-            console.log(data);
-        })
-        .catch(error => {
-                 setError(error.message);
-        })
-        ;
-         
-   },[]);
+    if(loading){
+        return <>
+            <h3>Loading</h3>
+        </>
+    }
 
    function handleLogout(){
     localStorage.removeItem("token");
+    updateUser("");
+
     navigate("/login")
 
    }
@@ -54,11 +32,20 @@ function UserProfilePage(){
             <div className="profileFullContainer">
 
                 <section className="userInfromation">
-                    {user &&(
-                        <>       
-                            <CircleUser size={220}/>
-                        
-                            <p className="user-name"><strong> {user.username}</strong> </p>
+
+
+                    {user && user.profilePicture ? (
+                        <img 
+                            src={user.profilePicture} 
+                            alt={`PrilePicture${user.username}`} 
+                           
+                            className="profilePictureImg"
+                        />
+                    ) : (
+                        <CircleUser size={200} />
+                    )}
+
+                    <p className="user-name"><strong> {user.username}</strong> </p>
                             <p className="user-email"> {user.email} </p>
                             <p className='user-study'> Grau Estudi:</p>
                             <p className='user-description'>{user.description} </p>
@@ -66,11 +53,7 @@ function UserProfilePage(){
 
                             <button className='editProfile'> Editar Perfil</button>
                             <button className='logout' onClick={handleLogout}> Tancar Sessio</button>
-                            
 
-                        </>
-                    )}
-                
                 </section>
 
                 <aside className="otherContainer">
