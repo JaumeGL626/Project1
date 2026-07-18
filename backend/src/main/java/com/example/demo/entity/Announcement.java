@@ -21,12 +21,13 @@ public class Announcement {
     @ElementCollection
     @CollectionTable(name = "announcement_urls", joinColumns = @JoinColumn(name = "announcement_id"))
     @Column(name = "url")
-    private List <String> urlAnnouncements;
+    private List <String> urlPhotos;
     private LocalDateTime date;
     private String description;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
+    private String title;
 
 
 
