@@ -9,8 +9,6 @@ import org.springframework.stereotype.Component;
 
 @Mapper(componentModel ="spring")
 public interface UserMapper {
-    @Mapping(source = "user.id", target = "userId")
-    @Mapping(source = "user.username", target = "username")
     UserProfileDto userToUserProfileDto (User user);
     UserEditProfileDto userToUserEditProfileDto (User user);
 
