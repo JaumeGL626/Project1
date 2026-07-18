@@ -43,9 +43,9 @@ function UserProfilePage(){
         headers: {
             Authorization: `Bearer ${token}` ,
              "Content-Type": "application/json"},
-         body: JSON.stringify({
-                username:username, 
-                description:description,
+            body: JSON.stringify({
+             username:username, 
+             description:description,
         })
     };
     fetch("http://localhost:8080/api/users/me", requestOptions)
@@ -89,14 +89,14 @@ function UserProfilePage(){
                     )}
 
                     {editing ? (
-                        <div className="edit-form">
+                        <div className="editForm">
                             <label> Username:</label>
-                            <input type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                            <input className="inputProfile" type="text" name="username" value={username} onChange={(e) => setUsername(e.target.value)} />
                             <label>Descripcio:</label>
-                            <textarea name="description" value={description} onChange={(e) => setDescription(e.target.value)} />
+                            <textarea className="textareaProfile" name="description" value={description} onChange={(e) => setDescription(e.target.value)} />
                             <div className="editButtons">
                                 <button className="cancelbutton" onClick={handleCancel}>Cancelar </button>
-                                <button className="ssaveButton" onClick={handleSave}> Guardar</button>
+                                <button className="saveButton" onClick={handleSave}> Guardar</button>
 
                             </div>
                         </div>
