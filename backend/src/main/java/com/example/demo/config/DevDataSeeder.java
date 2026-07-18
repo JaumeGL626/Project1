@@ -39,6 +39,7 @@ public class DevDataSeeder implements CommandLineRunner {
     @Override
     public void run (String... args){
         logger.info("Inicialitzant dades de desenvolupament...");
+        announcementRepository.deleteAll();
         userRepository.deleteAll();
 
 

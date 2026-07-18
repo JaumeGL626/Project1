@@ -9,8 +9,8 @@ import java.util.List;
 
 @Mapper(componentModel ="spring")
 public interface AnnouncementMapper {
-    @Mapping(source = "user.id", target = "userId")
-    @Mapping(source = "user.username", target = "username")
+    @Mapping(source = "user.id", target = "ownerId")
+    @Mapping(source = "user.username", target = "owner")
     AnnouncementDto announcementToAnnouncementDto(Announcement announcement);
     List< AnnouncementDto> announcementListToAnnouncementLisDto (List<Announcement> announcementList);
 }
