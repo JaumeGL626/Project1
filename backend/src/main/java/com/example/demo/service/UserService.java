@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.UserEditProfileDto;
 import com.example.demo.dto.UserProfileDto;
 import com.example.demo.entity.User;
 import com.example.demo.mapper.UserMapper;
@@ -40,6 +41,22 @@ public class UserService {
         ));
         return userMapper.userToUserProfileDto(user);
 
+
+    }
+
+    @Transactional
+    public UserProfileDto editProfile(String email, UserEditProfileDto request){
+        User user= userRepository.findByEmail(email).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "User not found"
+        ));
+
+        if(request.description()!=null){
+            user.setDescription(request.description());
+        }
+        if (request.username()!=null) {
+            user.setUsername(request.username());
+        }
+        return userMapper.userToUserProfileDto(user);
 
     }
 
