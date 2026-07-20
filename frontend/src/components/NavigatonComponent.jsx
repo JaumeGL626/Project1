@@ -1,8 +1,8 @@
 import { NavLink } from 'react-router-dom';
-
+import '../styles/NavStyle.css'
 function Navigation(){
     return(
-        <nav>
+        <nav className="mainNavigation">
             <ul>
                 <li>
                     <NavLink to="/home" className={({isActive,isPending})=> 

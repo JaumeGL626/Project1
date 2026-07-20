@@ -1,0 +1,33 @@
+.mainNavigation{
+    width: 100%;
+}
+
+.mainNavigation ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    list-style: none;
+    align-items: center;
+    gap: 20px;
+    padding: 12px 0;
+    margin: 0;
+    background-color: #4a4a4a;
+    width: 100%;
+
+}
+
+.mainNavigation a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+   
+}
+
+.mainNavigation a.active{
+    border-bottom: 2px solid black;
+    font-weight: bold;
+}
+
+.mainNavigation a:hover {
+    color: #ffd700;
+}
