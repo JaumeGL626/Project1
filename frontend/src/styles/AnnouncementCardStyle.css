@@ -1,0 +1,31 @@
+.headerCard{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+   
+}
+.headerLeft{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 30px;
+}
+
+.profilePicture{
+    cursor: pointer;
+     object-fit: cover;
+     border-radius: 50%;
+     width: 50px;
+     height: 50px;
+     border: 2px solid black;
+}
+.Announcementcard{
+    border-radius: 20px;
+}
+
+.datePublication{
+    margin:30px;
+}

@@ -1,15 +1,32 @@
 import React from "react";
 import Slider from "./Slider";
-
+import { CircleUser} from 'lucide-react';
+import '../styles/AnnouncementCardStyle.css'
 export const AnnouncementCard =({announcement})=> {
-    const {urlPhotos, date, description, owner, ownerprofilePicture,ownerId,title, id}= announcement;
+    const {urlPhotos, date, description, owner, ownerProfilePicture,ownerId,title, id}= announcement;
     
     return(
         <div className="Announcementcard">
             <div className="headerCard">
-                <h3>{title}</h3>
-                <p> {owner}</p>
-                <img src={ownerprofilePicture} />
+                
+                <div className=" headerCenter=">
+                    <h3>{title}</h3>
+                </div>
+                <div className="headerLeft">
+                    <p> {owner}</p>
+                    {ownerProfilePicture ? (
+                    <img 
+                        src={ownerProfilePicture} 
+                        alt={`Foto de perfil de ${owner}`} 
+                        className="profilePicture"
+                    />
+                ) : (
+                    <CircleUser className="defaultProfileIcon" />
+                )}
+
+                </div>
+                
+                
                 
             </div>
             <Slider photos={urlPhotos}/>             
@@ -17,7 +34,7 @@ export const AnnouncementCard =({announcement})=> {
             
             <div className="bodyCard">
                 <p>{description}</p>
-                <small> {date}</small>
+                <small className="datePublication"> {date}</small>
             </div>
 
         </div>
