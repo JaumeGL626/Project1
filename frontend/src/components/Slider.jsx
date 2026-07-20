@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import '../styles/SliderStyle.css'
 function Slider ({ photos}){
     const [actualPhoto,setActualPhoto]=useState(0)
     const length =photos.length;
@@ -30,12 +30,12 @@ function Slider ({ photos}){
         <div className="styleSlider"> 
 
             {length>1 &&(
-                <button onClick={handlePreviousPhoto}> ← </button>  
+                <button onClick={handlePreviousPhoto} className="buttonPrevious"> ← </button>  
             )}
-            <img src={photos[actualPhoto]} alt={`Foto ${actualPhoto + 1}`} />
+            <img className="photoSlider" src={photos[actualPhoto]} alt={`Foto ${actualPhoto + 1}`} />
 
             {length>1 &&(
-               <button onClick={handleNextPhoto}> →  </button>  
+               <button onClick={handleNextPhoto} className="buttonNext"> →  </button>  
             )}
             
 
