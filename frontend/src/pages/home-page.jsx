@@ -5,6 +5,7 @@ import { CurrentUserContex } from '../components/userContext';
 import '../styles/home-page.css'
 import AnnouncementCard from '../components/AnnouncementCard'
 import Header from '../components/HeaderComponent';
+import Navigation from '../components/NavigatonComponent';
 function HomePage() {
 
     const {user,loading} =useContext(CurrentUserContex);
@@ -29,10 +30,6 @@ function HomePage() {
         .catch(error=>{setError(error.message)})
         ;
     },[]);
-
-    function handleUserProfile(){
-        navigate("/users/profile")
-    }
     
 
     if(loading){
@@ -44,12 +41,7 @@ function HomePage() {
     return (
          <>
             <Header/>
-            <nav>
-                <ul>
-                    <li> Annuncis</li>
-                    <li> Forums</li>
-                </ul> 
-            </nav>
+            <Navigation/>
             {error && <p className="errorMessage">{error}</p>}
             <div className="announcementBody">
                     {announcement.length>0 ? (
