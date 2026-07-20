@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import { CurrentUserContex } from '../components/userContext';
 import '../styles/home-page.css'
 import AnnouncementCard from '../components/AnnouncementCard'
-
+import Header from '../components/HeaderComponent';
 function HomePage() {
 
     const {user,loading} =useContext(CurrentUserContex);
@@ -43,27 +43,7 @@ function HomePage() {
 
     return (
          <>
-            <header className="headerHomePage">
-                {user?.username ?(
-                    <h2> Benvolgut/da {user.username} a la pagina de la UDG</h2>
-                ):(
-                    <h2> benvolgut/da a la pagina de la UDG</h2>
-                )}
-                <div className="iconUserCircle">
-                    
-                    {user?.profilePicture ? (
-                        <img 
-                            src={user.profilePicture} 
-                            alt={`PrilePicture${user.username}`} 
-                            onClick={handleUserProfile}
-                            className="profilePictureImgHome"
-                        />
-                    ) : (
-                        <CircleUser onClick={handleUserProfile} />
-                    )}
-
-                </div>
-            </header>
+            <Header/>
             <nav>
                 <ul>
                     <li> Annuncis</li>
