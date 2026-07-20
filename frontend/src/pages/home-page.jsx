@@ -23,15 +23,19 @@ function HomePage() {
     return (
          <>
             <header className="headerHomePage">
-                <h2>Home</h2>
+                {user?.username ?(
+                    <h2> Benvolgut/da {user.username} a la pagina de la UDG</h2>
+                ):(
+                    <h2> benvolgut/da a la pagina de la UDG</h2>
+                )}
                 <div className="iconUserCircle">
                     
-                    {user && user.profilePicture ? (
+                    {user?.profilePicture ? (
                         <img 
                             src={user.profilePicture} 
                             alt={`PrilePicture${user.username}`} 
                             onClick={handleUserProfile}
-                            className="profilePictureImg"
+                            className="profilePictureImgHome"
                         />
                     ) : (
                         <CircleUser onClick={handleUserProfile} />

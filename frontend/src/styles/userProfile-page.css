@@ -16,18 +16,14 @@
     width: 100%;
     padding-left: 50px;
     margin-top: 80px;
+    padding-left: 120px;
     
 }
 
 
-.userInfromation{
-    align-content: space-between;
-    
-   
-}
 
 .otherContainer{
-    padding-right: 100px;
+    padding-right: 500px;
   
 }
 
@@ -71,4 +67,27 @@
      width: 150px;
      height: 150px;
      border: 2px solid black;
+}
+
+.editForm{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+   
+}
+.editButtons{
+    width: 100%;
+    margin: 0%;    
+}
+.cancelbutton, 
+.saveButton{
+    width: 100%;
+}
+.inputProfile{
+    width: 100%;
+}
+.textareaProfile{
+    width: 100%;
 }
