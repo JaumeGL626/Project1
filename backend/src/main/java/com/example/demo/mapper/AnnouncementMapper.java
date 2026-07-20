@@ -11,6 +11,7 @@ import java.util.List;
 public interface AnnouncementMapper {
     @Mapping(source = "user.id", target = "ownerId")
     @Mapping(source = "user.username", target = "owner")
+    @Mapping(source= "user.profilePicture", target="ownerProfilePicture")
     AnnouncementDto announcementToAnnouncementDto(Announcement announcement);
     List< AnnouncementDto> announcementListToAnnouncementLisDto (List<Announcement> announcementList);
 }

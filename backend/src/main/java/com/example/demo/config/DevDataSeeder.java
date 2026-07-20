@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Component
@@ -58,7 +59,7 @@ public class DevDataSeeder implements CommandLineRunner {
 
         Announcement announcement1= Announcement.builder()
                 .date(LocalDateTime.now())
-                .urlPhotos(null)
+                .urlPhotos(List.of("https://res.cloudinary.com/swafuttr/image/upload/v1784670128/udg_universitat_girona_nuevo_logo_b6xukw.jpg","https://res.cloudinary.com/swafuttr/image/upload/v1784670185/publicacio_buxvl0.jpg"))
                 .description("Avui comenca un nou curs!")
                 .user(user1)
                 .title("Curs 2026.2027")
