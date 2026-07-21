@@ -3,6 +3,9 @@ import com.example.demo.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Getter
@@ -22,5 +25,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
     private String profilePicture;
+    @OneToMany(mappedBy = "user")
+    List<Announcement> announcementList= new ArrayList<>();
 
 }
