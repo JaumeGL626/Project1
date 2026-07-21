@@ -59,6 +59,15 @@ public class UserService {
         return userMapper.userToUserProfileDto(user);
 
     }
+    //I do not do one dto only for one string sorry
+    @Transactional
+    public UserProfileDto setuserProfilePicture(String urlPicture, String email){
+        User user= userRepository.findByEmail(email).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "User not found"
+        ));
+        user.setProfilePicture(urlPicture);
+        return userMapper.userToUserProfileDto(user);
+    }
 
 
 }
