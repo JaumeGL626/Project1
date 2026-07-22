@@ -28,10 +28,7 @@ function HomePage() {
         })
         .catch(error=>{setError(error.message)})
         ;
-
-    
     },[]);
-
 
     function handleUserProfile(){
         navigate("/users/profile")
@@ -43,7 +40,6 @@ function HomePage() {
                <h3> Loading </h3>
               </> 
     }
-
 
     return (
          <>

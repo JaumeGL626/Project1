@@ -1,0 +1,18 @@
+.styleSlider{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 12px
+}
+
+.photoSlider{
+    width: 50%;
+    height: 50%;
+}
+.buttonPrevious,
+.buttonNext{
+    width: 40px;       
+    height: 40px;        
+    border-radius: 50%;   
+}
