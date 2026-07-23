@@ -10,6 +10,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping(path = "/api/users")
 public class UserController {
@@ -45,6 +47,16 @@ public class UserController {
         return ResponseEntity.ok(userProfileDto);
 
     }
+    @PutMapping(path = "/me/profilePicture")
+    public ResponseEntity<UserProfileDto>setUserProfilePicture (@RequestHeader ("Authorization") String authHeader,@Valid @RequestBody
+    Map<String, String> json){
+        String token= authHeader.replace("Bearer ","");
+        String email= jwtService.extractUsername(token);
+        String profilePictureUrl = json.get("profilePicture");
+        UserProfileDto userProfileDto=userService.setUserProfilePicture(email, profilePictureUrl);
+        return ResponseEntity.ok(userProfileDto);
+    }
+
 
 
 

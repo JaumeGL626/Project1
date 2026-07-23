@@ -60,5 +60,14 @@ public class UserService {
 
     }
 
+    @Transactional
+    public UserProfileDto setUserProfilePicture(String email,String profilePictureUrl){
+        User user= userRepository.findByEmail(email).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "User not found"
+        ));
+        user.setProfilePicture(profilePictureUrl);
+        return userMapper.userToUserProfileDto(user);
+    }
+
 
 }
