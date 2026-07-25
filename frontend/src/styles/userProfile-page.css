@@ -2,9 +2,10 @@
     margin-top: 30px;
     font-size: 30px;
     text-align: left;
-    align-items: center;
+    
     width: 100%;
-    padding-left: 70px;
+    padding-left: 50px;
+    box-sizing: border-box;
 
 }
 
@@ -23,7 +24,10 @@
 
 
 .otherContainer{
-    padding-right: 500px;
+   flex: 1; 
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
   
 }
 
@@ -85,9 +89,8 @@
 .saveButton{
     width: 100%;
 }
-.inputProfile{
-    width: 100%;
-}
+.inputProfile,
 .textareaProfile{
     width: 100%;
+    box-sizing: border-box;
 }
