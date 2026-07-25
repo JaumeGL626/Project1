@@ -3,6 +3,7 @@ import { CircleUser} from 'lucide-react'
 import "../styles/userProfile-page.css";
 import { CurrentUserContex } from "../components/userContext";
 import { useContext, useState } from "react";
+import { useRef } from "react";
 function UserProfilePage(){
 
    const navigate=useNavigate();
@@ -11,6 +12,7 @@ function UserProfilePage(){
    const {user,loading,updateUser}=useContext(CurrentUserContex); 
    const [username, setUsername] = useState("");
    const [description, setDescription] = useState("");  
+   const fileRef=useRef(null);
 
     if(loading){
         return <>
@@ -62,6 +64,63 @@ function UserProfilePage(){
    .catch(error=> setError(error.message));
 
    }
+   function handleChangeProfilePicture(){
+    if (fileRef.current) {
+        fileRef.current.click();
+    } else {
+        console.error("El input de archivo no se ha encontrado en el DOM");
+    }
+   }
+
+   function handelChangeNewPicutre(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const token = localStorage.getItem("token");
+    
+    const formData = new FormData();
+    formData.append("file", file); 
+
+    fetch("http://localhost:8080/api/images/upload", {
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${token}`
+        },
+        body: formData 
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Error al pujar la imatge al servidor");
+        }
+        return response.json(); 
+    })
+    .then(data => {
+        const imageUrl = data.url; 
+        console.log(data);
+
+        return fetch("http://localhost:8080/api/users/me/profilePicture", {
+            method: "PUT",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                profilePicture: imageUrl
+            })
+        });
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Error al actualitzar la foto de perfil");
+        }
+        return response.json();
+    })
+    .then(updatedUser => {
+        console.log(updateUser);
+        updateUser(updatedUser);
+    })
+    .catch(error => setError(error.message));
+}
 
 
    
@@ -83,10 +142,14 @@ function UserProfilePage(){
                             alt={`PrilePicture${user.username}`} 
                            
                             className="profilePictureImg"
+                            onClick={handleChangeProfilePicture}
                         />
                     ) : (
-                        <CircleUser size={200} />
+                        <CircleUser size={200} onClick={handleChangeProfilePicture}/>
                     )}
+                    <input className="newProfilePicture"
+                    type="file" ref={fileRef} onChange={handelChangeNewPicutre} accept="image/*"
+                    style={{display:"none"}}/>
 
                     {editing ? (
                         <div className="editForm">
@@ -124,4 +187,4 @@ function UserProfilePage(){
         </>
     )
 }
-export default UserProfilePage
+export default UserProfilePage;
