@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { CurrentUserContex } from './UserContext';
-import { apiClient } from '../api/apiClient'
+import { userService } from '../services/userService';
 
 export function UserProvider({children}){
     const [user, setUser]=useState(null);
@@ -17,7 +17,7 @@ export function UserProvider({children}){
         }
         else{
             try{
-                const data= await apiClient("/users/me");
+                const data= await userService.getOwnProfile();
                 setUser(data);
                 setError("");
             
