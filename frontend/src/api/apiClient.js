@@ -10,7 +10,7 @@ export async function apiClient(endpoint, options={}) {
         headers["Authorization"]= `Bearer ${token}`;
 
     }
-    if(options.body != options.body instanceof FormData){
+    if(options.body && !(options.body instanceof FormData)){
         headers["Content-Type"]= "application/json";
     }
     const config={

@@ -67,8 +67,6 @@ function UserProfilePage(){
    function handleChangeProfilePicture(){
     if (fileRef.current) {
         fileRef.current.click();
-    } else {
-        console.error("El input de archivo no se ha encontrado en el DOM");
     }
    }
 
