@@ -2,7 +2,7 @@ import {useContext, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import '../styles/login-page.css'
 import { CurrentUserContex } from '../context/UserContext';
-import { apiClient } from '../api/apiClient';
+import { authService } from '../services/authService';
 
 function LoginPage() {
     const [email, setEmail] = useState("");
@@ -24,13 +24,7 @@ function LoginPage() {
         e.preventDefault();
 
         try{
-            const loginResponse=await apiClient("/auth/login",{
-                method: "POST",
-                body: JSON.stringify({
-                    email: email, 
-                    password: password
-                })
-            });
+            const loginResponse=await authService.login(email,password);
             setError("");
             console.log(loginResponse);
             localStorage.setItem("token", loginResponse.token);
