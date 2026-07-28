@@ -5,7 +5,7 @@ import { CurrentUserContex } from "../context/UserContext";
 import { useContext, useState } from "react";
 import { useRef } from "react";
 import { userService } from "../services/userService";
-import { apiClient } from "../api/apiClient";
+import { imageService } from "../services/imageService";
 function UserProfilePage(){
 
    const navigate=useNavigate();
@@ -65,11 +65,7 @@ function UserProfilePage(){
     const formData = new FormData();
     formData.append("file", file); 
     try{
-        const imgData= await apiClient("/images/upload",{
-
-        method: "POST",
-        body: formData
-        })
+        const imgData= await imageService.uploadImage(formData);
 
         const user=await userService.changeProfihePicture(imgData);
         updateUser(user);
