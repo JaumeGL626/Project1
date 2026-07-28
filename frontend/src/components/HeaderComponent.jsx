@@ -1,7 +1,7 @@
 import { CircleUser} from 'lucide-react';
 import { useNavigate } from "react-router-dom";
 import { useContext } from 'react';
-import { CurrentUserContex } from '../components/userContext';
+import { CurrentUserContex } from '../context/UserContext';
 import '../styles/HeaderStyle.css';
 function Header(){
     const {user} =useContext(CurrentUserContex);

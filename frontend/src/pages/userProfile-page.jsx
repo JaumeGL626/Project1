@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { CircleUser} from 'lucide-react'
 import "../styles/userProfile-page.css";
-import { CurrentUserContex } from "../components/userContext";
+import { CurrentUserContex } from "../context/UserContext";
 import { useContext, useState } from "react";
 import { useRef } from "react";
-import { apiClient } from '../api/apiClient'
+import { userService } from "../services/userService";
+import { imageService } from "../services/imageService";
 function UserProfilePage(){
 
    const navigate=useNavigate();
@@ -41,14 +42,7 @@ function UserProfilePage(){
    async function handleSave(){
     
     try{
-        const user= await apiClient("/users/me",{
-             method: "PUT",
-            body: JSON.stringify({
-             username:username, 
-             description:description,
-            })
-
-        })
+        const user= await userService.editOwnProfile(username,description);
         setError("");
         updateUser(user);
         setEditing(false);
@@ -71,18 +65,9 @@ function UserProfilePage(){
     const formData = new FormData();
     formData.append("file", file); 
     try{
-        const imgData= await apiClient("/images/upload",{
+        const imgData= await imageService.uploadImage(formData);
 
-        method: "POST",
-        body: formData
-        })
-
-        const user=await apiClient ("/users/me/profilePicture",{
-             method: "PUT",
-             body: JSON.stringify({
-                profilePicture: imgData.url
-            })
-        })
+        const user=await userService.changeProfihePicture(imgData);
         updateUser(user);
         setError("");
     } catch(err){

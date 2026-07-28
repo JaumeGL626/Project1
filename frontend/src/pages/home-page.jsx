@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
-import { CurrentUserContex } from '../components/userContext';
+import { CurrentUserContex } from '../context/UserContext';
 import '../styles/home-page.css'
 import AnnouncementCard from '../components/AnnouncementCard'
 import Header from '../components/HeaderComponent';
 import Navigation from '../components/NavigatonComponent';
-import { apiClient } from '../api/apiClient';
+import { announcementService } from '../services/announcementService';
 
 function HomePage() {
 
@@ -16,7 +16,7 @@ function HomePage() {
     useEffect(()=> {
         const fetchAnnouncements = async () => {
         try{
-            const data= await apiClient("/announcements");
+            const data= await announcementService.getAllAnnouncements();
             setAnnouncement(data);
             setError("");
         } catch (err) {

@@ -3,7 +3,7 @@ import LoginPage  from './pages/login-page'
 import './App.css'
 import HomePage from "./pages/home-page";
 import UserProfilePage from "./pages/userProfile-page";
-import { UserProvider } from "./components/UserProvider";
+import { UserProvider } from "./context/UserProvider";
 function App() {
 
   return (
