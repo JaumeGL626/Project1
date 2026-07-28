@@ -2,6 +2,8 @@ import {useContext, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import '../styles/login-page.css'
 import { CurrentUserContex } from '../components/userContext';
+import { apiClient } from '../api/apiClient';
+
 function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -17,38 +19,26 @@ function LoginPage() {
         setPassword(e.target.value);
     }
 
-    function handleSubmit(e){
+    async function handleSubmit(e){
 
         e.preventDefault();
-        const requestOptions={
-            method:"POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                email:email, 
-                password:password
-            })
-        };
-        fetch("http://localhost:8080/api/auth/login", requestOptions)
-        .then(response=> {
-            if(!response.ok){
-                throw new Error("Usuari o contrasenya incorrectes");
-            }
-            setError("");
-            return response.json();
-        })
-        .then(loginResponse=>{
 
+        try{
+            const loginResponse=await apiClient("/auth/login",{
+                method: "POST",
+                body: JSON.stringify({
+                    email: email, 
+                    password: password
+                })
+            });
+            setError("");
             console.log(loginResponse);
             localStorage.setItem("token", loginResponse.token);
             updateUser(loginResponse);
             navigate("/home");
-
-        })
-        .catch(error => {
-                 setError(error.message);
-        })
-        ;
-       
+        }catch(err){
+            setError("Usuari o contrasenya incorrectes");
+        }
         
     }
 

@@ -1,42 +1,34 @@
 import { useState, useEffect } from 'react';
 import { CurrentUserContex } from './userContext';
-
+import { apiClient } from '../api/apiClient'
 
 export function UserProvider({children}){
-    const [user, setUser]=useState("");
+    const [user, setUser]=useState(null);
     const [loading, setLoading] =useState(true);
     const [error, setError] = useState("");
 
 
-    const fetchUser =() =>{
+    const fetchUser = async () =>{
         const token=localStorage.getItem("token");
         if(!token){
+            setUser(null);
             setLoading(false);
             return
         }
         else{
-            fetch("http://localhost:8080/api/users/me", {
-            headers:{
-                Authorization: `Bearer ${token}`
-                }
-            })
-            .then(response=>{
-                if(! response.ok){
-                    throw new Error("Error al cargar usuari");
-                }
-                setError("");
-                return response.json();
-            })
-            .then(data=>{
+            try{
+                const data= await apiClient("/users/me");
                 setUser(data);
-                console.log(data);
-                setLoading(false);
-            })
-            .catch(error => {
-                 setError(error.message);
-                 setLoading(false);
-            })
-            ;
+                setError("");
+            
+            } catch (err) {
+            console.error("Error al cargar usuari:", err.message);
+            setError(err.message);
+            setUser(null);
+            localStorage.removeItem("token");
+            } finally {
+            setLoading(false);
+            }
         }
 
 
@@ -58,6 +50,6 @@ export function UserProvider({children}){
         <CurrentUserContex.Provider value={{user,loading,updateUser,error}}>
             {children}  
          </CurrentUserContex.Provider>
-    )
+    );
 }
 

@@ -4,6 +4,7 @@ import "../styles/userProfile-page.css";
 import { CurrentUserContex } from "../components/userContext";
 import { useContext, useState } from "react";
 import { useRef } from "react";
+import { apiClient } from '../api/apiClient'
 function UserProfilePage(){
 
    const navigate=useNavigate();
@@ -37,91 +38,60 @@ function UserProfilePage(){
    function handleCancel(){
     setEditing(false);
    }
-   function handleSave(){
-    const token =localStorage.getItem("token");
-    const requestOptions={
-        method: "PUT",
-
-        headers: {
-            Authorization: `Bearer ${token}` ,
-             "Content-Type": "application/json"},
+   async function handleSave(){
+    
+    try{
+        const user= await apiClient("/users/me",{
+             method: "PUT",
             body: JSON.stringify({
              username:username, 
              description:description,
-        })
-    };
-    fetch("http://localhost:8080/api/users/me", requestOptions)
-   .then(response=> {
-    if(!response.ok){
-        throw new Error ("error al editar perfil")
-    }
-    return response.json();
-   })
-   .then(response=> {
-    updateUser(response);
-    setEditing(false);
-   })
-   .catch(error=> setError(error.message));
+            })
 
-   }
+        })
+        setError("");
+        updateUser(user);
+        setEditing(false);
+    }catch(err){
+        setError("Error al editar perfil");
+    }
+    }
+
+    
    function handleChangeProfilePicture(){
     if (fileRef.current) {
         fileRef.current.click();
-    } else {
-        console.error("El input de archivo no se ha encontrado en el DOM");
     }
    }
 
-   function handelChangeNewPicutre(e) {
+   async function handelChangeNewPicutre(e) {
     const file = e.target.files[0];
     if (!file) return;
-
-    const token = localStorage.getItem("token");
     
     const formData = new FormData();
     formData.append("file", file); 
+    try{
+        const imgData= await apiClient("/images/upload",{
 
-    fetch("http://localhost:8080/api/images/upload", {
         method: "POST",
-        headers: {
-            "Authorization": `Bearer ${token}`
-        },
-        body: formData 
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Error al pujar la imatge al servidor");
-        }
-        return response.json(); 
-    })
-    .then(data => {
-        const imageUrl = data.url; 
-        console.log(data);
+        body: formData
+        })
 
-        return fetch("http://localhost:8080/api/users/me/profilePicture", {
-            method: "PUT",
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                profilePicture: imageUrl
+        const user=await apiClient ("/users/me/profilePicture",{
+             method: "PUT",
+             body: JSON.stringify({
+                profilePicture: imgData.url
             })
-        });
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Error al actualitzar la foto de perfil");
-        }
-        return response.json();
-    })
-    .then(updatedUser => {
-        console.log(updateUser);
-        updateUser(updatedUser);
-    })
-    .catch(error => setError(error.message));
-}
+        })
+        updateUser(user);
+        setError("");
+    } catch(err){
+        setError("Error al actualizar la foto de perfil");
+    }
 
+    
+
+}
 
    
 
