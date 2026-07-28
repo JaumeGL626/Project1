@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { CurrentUserContex } from './userContext';
+import { CurrentUserContex } from './UserContext';
 import { apiClient } from '../api/apiClient'
 
 export function UserProvider({children}){

@@ -1,7 +1,7 @@
 import {useContext, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import '../styles/login-page.css'
-import { CurrentUserContex } from '../components/userContext';
+import { CurrentUserContex } from '../context/UserContext';
 import { apiClient } from '../api/apiClient';
 
 function LoginPage() {

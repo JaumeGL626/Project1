@@ -1,5 +1,5 @@
 import React from "react";
-import Slider from "./Slider";
+import Slider from "./SliderComponent";
 import { CircleUser} from 'lucide-react';
 import '../styles/AnnouncementCardStyle.css'
 export const AnnouncementCard =({announcement})=> {

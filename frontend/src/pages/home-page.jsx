@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { CurrentUserContex } from '../components/userContext';
+import { CurrentUserContex } from '../context/UserContext';
 import '../styles/home-page.css'
 import AnnouncementCard from '../components/AnnouncementCard'
 import Header from '../components/HeaderComponent';

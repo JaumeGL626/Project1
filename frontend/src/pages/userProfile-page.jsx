@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { CircleUser} from 'lucide-react'
 import "../styles/userProfile-page.css";
-import { CurrentUserContex } from "../components/userContext";
+import { CurrentUserContex } from "../context/UserContext";
 import { useContext, useState } from "react";
 import { useRef } from "react";
 import { apiClient } from '../api/apiClient'
