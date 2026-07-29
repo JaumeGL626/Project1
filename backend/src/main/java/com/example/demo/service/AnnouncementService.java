@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.AnnouncementRequest;
 import com.example.demo.dto.AnnouncementResponse;
 import com.example.demo.entity.Announcement;
 import com.example.demo.entity.User;
@@ -31,7 +32,7 @@ public class AnnouncementService {
         return announcementMapper.announcementListToAnnouncementLisDto(announcement);
     }
     @Transactional
-    public AnnouncementResponse postAnnouncement(String email, AnnouncementResponse request){
+    public AnnouncementResponse postAnnouncement(String email, AnnouncementRequest request){
         User user= userRepository.findByEmail(email).orElseThrow(()-> new ResponseStatusException(
                 HttpStatus.NOT_FOUND,
                 "User not found"
