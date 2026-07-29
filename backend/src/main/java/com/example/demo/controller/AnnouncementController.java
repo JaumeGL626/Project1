@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.AnnouncementDto;
+import com.example.demo.dto.AnnouncementResponse;
 import com.example.demo.service.AnnouncementService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +18,9 @@ public class AnnouncementController {
         this.announcementService=announcementService;
     }
     @GetMapping
-    ResponseEntity<List<AnnouncementDto>> getAllAnnouncements(){
-        List<AnnouncementDto> announcementDtoList=announcementService.getAllAnnnouncements();
-        return ResponseEntity.ok(announcementDtoList);
+    ResponseEntity<List<AnnouncementResponse>> getAllAnnouncements(){
+        List<AnnouncementResponse> announcementResponseList =announcementService.getAllAnnnouncements();
+        return ResponseEntity.ok(announcementResponseList);
 
     }
 }
