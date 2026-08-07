@@ -6,5 +6,19 @@ export const announcementService = {
         return await apiClient("/announcements");
     },
 
+    postAnnouncement: async (title, description, photos) => {
+        return await apiClient ("/announcements",{
+            method: "POST",
+            body: JSON.stringify({
+                    title: title, 
+                    description: description,
+                    urlPhotos:photos
+                })
+
+
+
+        })
+    }
+
     
 };

@@ -25,8 +25,7 @@ export async function apiClient(endpoint, options={}) {
             const errorData = await response.json();
             errorMessage = errorData.message || errorMessage;
         } catch {
-            const textError = await response.text();
-            if (textError) errorMessage = textError;
+          
         }
         throw new Error(errorMessage);
     }
