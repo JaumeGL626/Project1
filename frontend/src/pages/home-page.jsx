@@ -11,6 +11,10 @@ function HomePage() {
     const {user,loading} =useContext(CurrentUserContex);
     const [announcement,setAnnouncement]=useState([]);
     const [error,setError]=useState("");
+    const [popUpOpen,setPopUpOpen]=useState(false);
+    const [title,setTitle]=useState("");
+    const [description,setDescription]=useState("");
+
     
 
     useEffect(()=> {
@@ -26,6 +30,10 @@ function HomePage() {
         };
         fetchAnnouncements();
     },[]);
+
+    function handleForm(){
+
+    }
     
 
     if(loading){
@@ -34,11 +42,27 @@ function HomePage() {
               </> 
     }
 
+    
+
     return (
          <>
             <Header/>
             <Navigation/>
             {error && <p className="errorMessage">{error}</p>}
+            <button className='popUp' onClick={setPopUpOpen(true)}> Penjar anunci </button>
+
+            {popUpOpen  ? (
+                  <form className='formAnnouncement' onSubmit={handleForm}>
+                <label> Introdueix el titol del anunci que vols publicar</label>
+                <input type='text' value={title}> </input>  
+                <label> Introduiex la descripcio del anunci:</label>
+                <textarea className=' textAreaAnnouncement' name='description' value={description}></textarea>
+                <button onClick={setPopUpOpen(false)}>Publicar </button>
+                <button onClick={setPopUpOpen(false)}>Cancelar </button>
+            </form>
+
+                
+            ) }
             <div className="announcementBody">
                     {announcement.length>0 ? (
                         announcement.map((announcement)=>(
