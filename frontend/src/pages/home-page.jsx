@@ -14,6 +14,7 @@ function HomePage() {
     const [popUpOpen,setPopUpOpen]=useState(false);
     const [title,setTitle]=useState("");
     const [description,setDescription]=useState("");
+    
 
     
 
@@ -30,9 +31,31 @@ function HomePage() {
         };
         fetchAnnouncements();
     },[]);
+    function handleTitle(e){
+        setTitle(e.target.value);
+    }
+    function handleDescription(e){
+        setDescription(e.target.value);
+    }
 
-    function handleForm(){
 
+    async function handleForm(e){
+
+        e.preventDefault();
+        
+        try{
+            const newAnnouncement= await announcementService.postAnnouncement(title,description, [])
+            setAnnouncement([newAnnouncement, ...announcement]);
+            setDescription("");
+            setTitle("");
+            setError("");
+            setPopUpOpen(false);
+        }  
+        catch(error){
+            setError("Error al publicar anunci");
+
+        }
+        
     }
     
 
@@ -49,16 +72,16 @@ function HomePage() {
             <Header/>
             <Navigation/>
             {error && <p className="errorMessage">{error}</p>}
-            <button className='popUp' onClick={setPopUpOpen(true)}> Penjar anunci </button>
+            <button className='popUp' onClick={()=> setPopUpOpen(true)}> Penjar anunci </button>
 
-            {popUpOpen  ? (
+            {popUpOpen  && (
                   <form className='formAnnouncement' onSubmit={handleForm}>
                 <label> Introdueix el titol del anunci que vols publicar</label>
-                <input type='text' value={title}> </input>  
+                <input className='inputAnnouncecmentTittle' type='text' value={title} onChange={handleTitle}/>
                 <label> Introduiex la descripcio del anunci:</label>
-                <textarea className=' textAreaAnnouncement' name='description' value={description}></textarea>
-                <button onClick={setPopUpOpen(false)}>Publicar </button>
-                <button onClick={setPopUpOpen(false)}>Cancelar </button>
+                <textarea className=' textAreaAnnouncement' name='description' value={description} onChange={handleDescription}></textarea>
+                <button  type='submit'>Publicar </button>
+                <button onClick={()=> setPopUpOpen(false)} type='button' >Cancelar </button>
             </form>
 
                 
