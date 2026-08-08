@@ -2,14 +2,23 @@ import { CircleUser} from 'lucide-react';
 import { useNavigate } from "react-router-dom";
 import { useContext } from 'react';
 import { CurrentUserContex } from '../context/UserContext';
+import { useState } from 'react';
 import '../styles/HeaderStyle.css';
+import Navigation from './NavigatonComponent';
 function Header(){
     const {user} =useContext(CurrentUserContex);
     const navigate = useNavigate();
+    const [menuOpen,setMenuOpen]=useState(false);   
 
     function handleUserProfile(){
+        setMenuOpen(false);
         navigate("/users/profile")
     }
+    function setTrueMenuUser(){
+        
+        setMenuOpen(!menuOpen)
+    }
+
     return(
         <header className="headerHomePage">
                 {user?.username ?(
@@ -23,14 +32,28 @@ function Header(){
                         <img 
                             src={user.profilePicture} 
                             alt={`PrilePicture${user.username}`} 
-                            onClick={handleUserProfile}
+                            onClick={setTrueMenuUser}
                             className="profilePictureImgHome"
                         />
                     ) : (
-                        <CircleUser onClick={handleUserProfile} />
+                        <CircleUser onClick={setTrueMenuUser} />
                     )}
 
                 </div>
+                {menuOpen && (
+                    <div className='choseOptionsUser'>
+                        <ul>
+                            <li onClick={handleUserProfile} >
+                                 Mi perfil
+                        
+                            </li>
+                            <li>
+                                Mis publicaciones
+                            </li>
+                        </ul>
+                        
+                    </div>
+                )}
             </header>
     )
     

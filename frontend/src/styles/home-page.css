@@ -5,12 +5,16 @@
      justify-content: right;
 }
 .formAnnouncement{
+     
      display: flex;
      flex-direction: column;
      border-radius: 20px;
      border: 2px solid black;
     padding: 5%;
     gap: 9px;
+     position: absolute;
+    z-index: 10;
+    background-color: bisque;
 }
 .buttonFormAnnouncement{
      display: flex;
