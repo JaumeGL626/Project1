@@ -14,11 +14,14 @@ export const announcementService = {
                     description: description,
                     urlPhotos:photos
                 })
-
-
-
         })
-    }
+
+        
+    },
+
+    getAllMyAnnouncements: async () => {
+        return await apiClient("/announcements/my");
+    },
 
     
 };

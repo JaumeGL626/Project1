@@ -4,6 +4,7 @@ import './App.css'
 import HomePage from "./pages/home-page";
 import UserProfilePage from "./pages/userProfile-page";
 import { UserProvider } from "./context/UserProvider";
+import MyAnnouncementPage from"./pages/MyAnnouncements-page";
 function App() {
 
   return (
@@ -13,6 +14,7 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/users/profile" element={<UserProfilePage/>}/>
+                <Route path="/announcements/my" element={<MyAnnouncementPage/>}/>
             </Routes>
         </BrowserRouter>
     </UserProvider>
