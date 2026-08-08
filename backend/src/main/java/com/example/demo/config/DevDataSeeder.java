@@ -76,6 +76,15 @@ public class DevDataSeeder implements CommandLineRunner {
                 .build();
         announcementRepository.save(announcement1);
 
+        Announcement announcement2= Announcement.builder()
+                .date(LocalDateTime.now())
+                .urlPhotos(List.of("https://res.cloudinary.com/swafuttr/image/upload/v1786134056/ktlthbjzabvg8uyiy7gj.jpg"))
+                .description("DOnem per iniciat el club de videojocs! Som un grup petit de unes quantes persones on ens apasiona el mon dels videojocs!")
+                .user(user2)
+                .title("Inaugurem el club de videojocs!")
+                .build();
+        announcementRepository.save(announcement2);
+
 
     }
 
