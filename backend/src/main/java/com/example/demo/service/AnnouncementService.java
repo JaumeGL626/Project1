@@ -55,5 +55,12 @@ public class AnnouncementService {
         List<Announcement> announcementList=announcementRepository.findByUserId(user.getId());
         return announcementMapper.announcementListToAnnouncementLisDto(announcementList);
     }
+    public void deleteAnnouncement (Long id ){
+        Announcement announcement=announcementRepository.findById(id).orElseThrow(()-> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "Announcement not found"
+        ));
+        announcementRepository.delete(announcement);
+    }
 
 }
