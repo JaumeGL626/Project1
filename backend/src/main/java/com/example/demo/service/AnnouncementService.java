@@ -47,4 +47,13 @@ public class AnnouncementService {
         return announcementMapper.announcementToAnnouncementDto(newAnnouncement);
     }
 
+    public List<AnnouncementResponse> getAllMyAnnouncements(String email){
+        User user= userRepository.findByEmail(email).orElseThrow(()-> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "User not found"
+        ));
+        List<Announcement> announcementList=announcementRepository.findByUserId(user.getId());
+        return announcementMapper.announcementListToAnnouncementLisDto(announcementList);
+    }
+
 }
