@@ -18,6 +18,11 @@ function Header(){
         
         setMenuOpen(!menuOpen)
     }
+    function  handleMyAnnouncements(){
+        setMenuOpen(false);
+        navigate("/announcements/my")
+        
+    }
 
     return(
         <header className="headerHomePage">
@@ -47,7 +52,7 @@ function Header(){
                                  Mi perfil
                         
                             </li>
-                            <li>
+                            <li onClick={handleMyAnnouncements}>
                                 Mis publicaciones
                             </li>
                         </ul>
