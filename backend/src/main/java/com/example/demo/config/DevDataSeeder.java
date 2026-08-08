@@ -57,6 +57,16 @@ public class DevDataSeeder implements CommandLineRunner {
                 .build();
         userRepository.save(user1);
 
+        User user2= User.builder()
+                .username("kai")
+                .email("u111@campus.udg.edu")
+                .password(passwordEncoder.encode("1234"))
+                .description("Soc una noia que estudia GEB")
+                .role(Role.USER)
+                .profilePicture("https://res.cloudinary.com/swafuttr/image/upload/v1786200818/gdwg21xuvcwzbcefyz5e.png")
+                .build();
+        userRepository.save(user2);
+
         Announcement announcement1= Announcement.builder()
                 .date(LocalDateTime.now())
                 .urlPhotos(List.of("https://res.cloudinary.com/swafuttr/image/upload/v1784670128/udg_universitat_girona_nuevo_logo_b6xukw.jpg","https://res.cloudinary.com/swafuttr/image/upload/v1784670185/publicacio_buxvl0.jpg"))
@@ -65,6 +75,17 @@ public class DevDataSeeder implements CommandLineRunner {
                 .title("Curs 2026.2027")
                 .build();
         announcementRepository.save(announcement1);
+
+        Announcement announcement2= Announcement.builder()
+                .date(LocalDateTime.now())
+                .urlPhotos(List.of("https://res.cloudinary.com/swafuttr/image/upload/v1786134056/ktlthbjzabvg8uyiy7gj.jpg"))
+                .description("DOnem per iniciat el club de videojocs! Som un grup petit de unes quantes persones on ens apasiona el mon dels videojocs!")
+                .user(user2)
+                .title("Inaugurem el club de videojocs!")
+                .build();
+        announcementRepository.save(announcement2);
+
+
     }
 
 }

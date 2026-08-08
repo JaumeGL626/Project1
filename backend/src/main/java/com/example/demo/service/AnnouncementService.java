@@ -46,5 +46,14 @@ public class AnnouncementService {
         announcementRepository.save(newAnnouncement);
         return announcementMapper.announcementToAnnouncementDto(newAnnouncement);
     }
+    @Transactional(readOnly = true)
+    public List<AnnouncementResponse> getAllMyAnnouncements(String email){
+        User user= userRepository.findByEmail(email).orElseThrow(()-> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "User not found"
+        ));
+        List<Announcement> announcementList=announcementRepository.findByUserId(user.getId());
+        return announcementMapper.announcementListToAnnouncementLisDto(announcementList);
+    }
 
 }
