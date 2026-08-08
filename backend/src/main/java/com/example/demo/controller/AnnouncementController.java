@@ -34,4 +34,12 @@ public class AnnouncementController {
         AnnouncementResponse announcementResponse=announcementService.postAnnouncement(email,request);
         return ResponseEntity.status(HttpStatus.CREATED).body(announcementResponse);
     }
+    @GetMapping(path = "/my")
+    ResponseEntity<List<AnnouncementResponse>> getAllMyAnnouncements(@RequestHeader("Authorization") String authHeader){
+        String token= authHeader.replace("Bearer ","");
+        String email= jwtService.extractUsername(token);
+        List<AnnouncementResponse> announcementRequestList=announcementService.getAllMyAnnouncements(email);
+        return ResponseEntity.ok(announcementRequestList);
+
+    }
 }
