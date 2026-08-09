@@ -76,7 +76,7 @@ public class AnnouncementService {
         }
         announcement.setDescription(request.description());
         announcement.setTitle((request.title()));
-
+        return announcementMapper.announcementToAnnouncementDto(announcement);
 
     }
 
