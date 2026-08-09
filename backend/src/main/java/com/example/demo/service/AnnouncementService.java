@@ -62,6 +62,7 @@ public class AnnouncementService {
         ));
         announcementRepository.delete(announcement);
     }
+    @Transactional
     public AnnouncementResponse editAnnouncement (Long id,String email, AnnouncementRequest request){
         Announcement announcement=announcementRepository.findById(id).orElseThrow(()-> new ResponseStatusException(
                 HttpStatus.NOT_FOUND,
