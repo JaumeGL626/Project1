@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.AnnouncementRequest;
 import com.example.demo.dto.AnnouncementResponse;
+import com.example.demo.entity.Announcement;
 import com.example.demo.security.JwtService;
 import com.example.demo.service.AnnouncementService;
 import jakarta.validation.Valid;
@@ -47,6 +48,13 @@ public class AnnouncementController {
     public ResponseEntity<Void> deleteAnnouncement(@PathVariable Long id){
         announcementService.deleteAnnouncement(id);
         return ResponseEntity.noContent().build();
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<AnnouncementResponse> editAnnouncement (@PathVariable Long id,@RequestHeader("Authorization") String authHeader, @Valid @RequestBody AnnouncementRequest request){
+        String token= authHeader.replace("Bearer ","");
+        String email= jwtService.extractUsername(token);
+        AnnouncementResponse announcement =announcementService.editAnnouncement(id,email, request);
+        return ResponseEntity.ok(announcement);
     }
 
 }
