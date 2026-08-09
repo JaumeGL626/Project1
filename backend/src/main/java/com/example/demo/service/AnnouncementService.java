@@ -62,5 +62,22 @@ public class AnnouncementService {
         ));
         announcementRepository.delete(announcement);
     }
+    public AnnouncementResponse editAnnouncement (Long id,String email, AnnouncementRequest request){
+        Announcement announcement=announcementRepository.findById(id).orElseThrow(()-> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "Announcement not found"
+        ));
+        User user= userRepository.findByEmail(email).orElseThrow(()-> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "User not found"
+        ));
+        if(announcement.getUser().getId()!=user.getId()){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Error no tens permisos per editar el anuncio");
+        }
+        announcement.setDescription(request.description());
+        announcement.setTitle((request.title()));
+
+
+    }
 
 }
