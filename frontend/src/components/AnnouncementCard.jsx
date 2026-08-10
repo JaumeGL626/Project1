@@ -9,7 +9,7 @@ export const AnnouncementCard =({announcement, isEditing, onEdit,onDelete})=> {
         <div className="Announcementcard">
             <div className="headerCard">
                 
-                <div className=" headerCenter=">
+                <div className=" headerCenter">
                     <h3>{title}</h3>
                 </div>
                 <div className="headerLeft">
@@ -38,8 +38,8 @@ export const AnnouncementCard =({announcement, isEditing, onEdit,onDelete})=> {
 
                 {isEditing && ( 
                    <div className="optionsAnnoucement">
-                        <button> Editar</button>
-                        <button> Eliminar</button>
+                        <button onClick={() => onEdit(announcement)}> Editar</button>
+                        <button onClick={() => onEdit(announcement.id)}> Eliminar</button>
                     </div>
 
                 )}
