@@ -16,6 +16,9 @@ function HomePage() {
     const [title,setTitle]=useState("");
     const [description,setDescription]=useState("");
     const [selectedFiles, setSelectedFiles] = useState([]);
+    const[onEdit, setOnEdit]=useState("");
+    const[isEditing,setIsEditing]=useState(false);
+    const [onDelete,setOnDelete]=useState("");
     
 
     
@@ -98,26 +101,26 @@ function HomePage() {
 
             {popUpOpen  && (
                 <form className='formAnnouncement' onSubmit={handleForm}>
-                <h3>Publicar Anunci</h3>
-                <label> Introdueix el titol del anunci que vols publicar:</label>
-                <input className='inputAnnouncecmentTittle' type='text' value={title} onChange={handleTitle}/>
-                <label> Introduiex la descripcio del anunci:</label>
-                <textarea className=' textAreaAnnouncement' name='description' value={description} onChange={handleDescription}></textarea>
-                <input className="photosAnnounccement" type="file"  onChange={handlePhotosAnnouncement} accept="image/*" multiple/>
-                <div className='buttonFormAnnouncement'>
-                    <button onClick={()=> setPopUpOpen(false)} type='button' >Cancelar </button>
-                    <button  type='submit'>Publicar </button>
+                    <h3>Publicar Anunci</h3>
+                    <label> Introdueix el titol del anunci que vols publicar:</label>
+                    <input className='inputAnnouncecmentTittle' type='text' value={title} onChange={handleTitle}/>
+                    <label> Introduiex la descripcio del anunci:</label>
+                    <textarea className=' textAreaAnnouncement' name='description' value={description} onChange={handleDescription}></textarea>
+                    <input className="photosAnnounccement" type="file"  onChange={handlePhotosAnnouncement} accept="image/*" multiple/>
+                        <div className='buttonFormAnnouncement'>
+                            <button onClick={()=> setPopUpOpen(false)} type='button' >Cancelar </button>
+                            <button  type='submit'>Publicar </button>
                     
-                </div>
+                        </div>
                 
-            </form>
+                </form>
 
                 
             ) }
             <div className="announcementBody">
                     {announcement.length>0 ? (
                         announcement.map((announcement)=>(
-                            <AnnouncementCard key={announcement.id} announcement={announcement} />
+                            <AnnouncementCard key={announcement.id} announcement={announcement} isEditing={isEditing} onEdit={onEdit} onDelete={onDelete} />
                         ))
                     ):(
                         <p>No hi han anuncis publicats</p>
