@@ -16,6 +16,9 @@ function HomePage() {
     const [title,setTitle]=useState("");
     const [description,setDescription]=useState("");
     const [selectedFiles, setSelectedFiles] = useState([]);
+    const[onEdit, setOnEdit]=useState(false);
+    const[isEditing,setIsEditing]=useState(false);
+    const [onDelete,setOnDelete]=useState(false);
     
 
     
@@ -117,7 +120,7 @@ function HomePage() {
             <div className="announcementBody">
                     {announcement.length>0 ? (
                         announcement.map((announcement)=>(
-                            <AnnouncementCard key={announcement.id} announcement={announcement} />
+                            <AnnouncementCard key={announcement.id} announcement={announcement} isEditing={isEditing} onEdit={onEdit} onDelete={onDelete} />
                         ))
                     ):(
                         <p>No hi han anuncis publicats</p>

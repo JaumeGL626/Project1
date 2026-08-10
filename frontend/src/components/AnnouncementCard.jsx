@@ -2,7 +2,7 @@ import React from "react";
 import Slider from "./SliderComponent";
 import { CircleUser} from 'lucide-react';
 import '../styles/AnnouncementCardStyle.css'
-export const AnnouncementCard =({announcement})=> {
+export const AnnouncementCard =({announcement, isEditing, onEdit,onDelete})=> {
     const {urlPhotos, date, description, owner, ownerProfilePicture,ownerId,title, id}= announcement;
     
     return(
@@ -35,6 +35,14 @@ export const AnnouncementCard =({announcement})=> {
             <div className="bodyCard">
                 <p>{description}</p>
                 <small className="datePublication"> {date}</small>
+
+                {isEditing && ( 
+                   <div className="optionsAnnoucement">
+                        <button> Editar</button>
+                        <button> Eliminar</button>
+                    </div>
+
+                )}
             </div>
 
         </div>

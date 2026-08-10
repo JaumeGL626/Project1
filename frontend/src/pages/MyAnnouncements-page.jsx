@@ -6,6 +6,9 @@ import { CurrentUserContex } from '../context/UserContext';
 function MyAnnouncementPage(){
     const[myAnnouncements,setMyAnnouncements]=useState([])
     const [error,setError]=useState("");
+    const[onEdit, setOnEdit]=useState(false);
+    const[isEditing,setIsEditing]=useState(false);
+    const [onDelete,setOnDelete]=useState(false);
 
     useEffect(()=> {
         const fetchAnnouncements = async () => {
@@ -22,14 +25,18 @@ function MyAnnouncementPage(){
                 fetchAnnouncements();
     },[])
 
+    function handleIsEditing(){
+        setIsEditing(!isEditing);
+    }
+
     return (<>
                 <Header/>
                 <h3> Mis publicaciones</h3>
-                <button className="buttonEditAnnouncements"> Editar Anuncis</button>
+                <button className="buttonEditAnnouncements" onClick={handleIsEditing}> Editar Anuncis</button>
                 <div className="announcementBody">
                                     {myAnnouncements.length>0 ? (
                                         myAnnouncements.map((announcement)=>(
-                                            <AnnouncementCard key={announcement.id} announcement={announcement} />
+                                            <AnnouncementCard key={announcement.id} announcement={announcement} isEditing={isEditing} onEdit={onEdit} onDelete={onDelete}/>
                                         ))
                                     ):(
                                         <p>No tens cap anunci publicat</p>
