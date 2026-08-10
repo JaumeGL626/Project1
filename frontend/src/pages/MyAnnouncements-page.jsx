@@ -3,12 +3,12 @@ import { announcementService } from "../services/announcementService";
 import Header from "../components/HeaderComponent";
 import AnnouncementCard from '../components/AnnouncementCard'
 import { CurrentUserContex } from '../context/UserContext';
+import Navigation from "../components/NavigatonComponent";
 function MyAnnouncementPage(){
     const[myAnnouncements,setMyAnnouncements]=useState([])
     const [error,setError]=useState("");
 
     const[isEditing,setIsEditing]=useState(false);
-    const [onDelete,setOnDelete]=useState(null);
     const[actualTitle,setActualTitle]=useState("");
     const[actualDescription,setActualDescription]=useState("");
     const[myEditingActualAnnouncement,setMyEditingActualAnnouncement]=useState(null)
@@ -54,16 +54,28 @@ function MyAnnouncementPage(){
 
     }
 
+    async function handleOnDelete(id){
+        try{
+            
+            await announcementService.deleteAnnouncement(id);
+            window.location.reload();
+            setError("");
+        }catch(err){
+                setError("Error al eliminar anunci");
+        }
+    }
+
 
 
     return (<>
                 <Header/>
+                <Navigation/>
                 <h3> Els meus anuncis</h3>
                 <button className="buttonEditAnnouncements" onClick={handleIsEditing}> Editar Anuncis</button>
                 <div className="announcementBody">
                                     {myAnnouncements.length>0 ? (
                                         myAnnouncements.map((announcement)=>(
-                                            <AnnouncementCard key={announcement.id} announcement={announcement} isEditing={isEditing} onEdit={handleEdit} onDelete={onDelete}/>
+                                            <AnnouncementCard key={announcement.id} announcement={announcement} isEditing={isEditing} onEdit={handleEdit} onDelete={handleOnDelete}/>
                                         ))
                                     ):(
                                         <p>No tens cap anunci publicat</p>

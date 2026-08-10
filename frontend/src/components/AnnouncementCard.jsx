@@ -39,7 +39,7 @@ export const AnnouncementCard =({announcement, isEditing, onEdit,onDelete})=> {
                 {isEditing && ( 
                    <div className="optionsAnnoucement">
                         <button onClick={() => onEdit(announcement)}> Editar</button>
-                        <button onClick={() => onEdit(announcement.id)}> Eliminar</button>
+                        <button onClick={() => onDelete(announcement.id)}> Eliminar</button>
                     </div>
 
                 )}
