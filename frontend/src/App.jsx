@@ -15,6 +15,7 @@ function App() {
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/users/profile" element={<UserProfilePage/>}/>
                 <Route path="/announcements/my" element={<MyAnnouncementPage/>}/>
+                <Route path="/users/public/:id" element={<publicUserProfile/>}/>
             </Routes>
         </BrowserRouter>
     </UserProvider>
