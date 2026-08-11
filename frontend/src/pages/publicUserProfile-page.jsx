@@ -3,7 +3,7 @@ import {userService} from "../services/userService"
 import { useParams } from "react-router-dom"
 import Navigation from "../components/NavigatonComponent";
 import { CircleUser} from 'lucide-react'
-
+import "../styles/publicUserProfile-page.css";
 function PublicUserProfile(){
 
     const { id } = useParams();
@@ -31,7 +31,12 @@ function PublicUserProfile(){
            <h2> Aquest es el perfil de {user?.username}</h2>
             </header>
             <Navigation/>
-            <section className="userInfromation">
+            <div className="bodyuserprofile">
+
+
+
+            
+                <section className="userInfromation">
 
                     {user && user?.profilePicture ? (
                         <img 
@@ -54,13 +59,14 @@ function PublicUserProfile(){
                     
 
                 </section>
-            <div className=" optionsUserToUSer">
-                <ul>
-                    <li> Invitar a un grup</li>
-                    <li> Comernçar xat</li>
-                    <li> Invitar a forum </li>
-                    <li> Future updates...</li>
-                </ul>
+                <div className=" optionsUserToUSer">
+                     <ul>
+                        <li> Invitar a un grup</li>
+                        <li> Comernçar xat</li>
+                        <li> Invitar a forum </li>
+                        <li> Future updates...</li>
+                    </ul>
+                </div>
             </div>
         </>
     )
