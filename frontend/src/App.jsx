@@ -5,6 +5,7 @@ import HomePage from "./pages/home-page";
 import UserProfilePage from "./pages/userProfile-page";
 import { UserProvider } from "./context/UserProvider";
 import MyAnnouncementPage from"./pages/MyAnnouncements-page";
+import PublicUserProfile from "./pages/publicUserProfile-page";
 function App() {
 
   return (
@@ -15,7 +16,7 @@ function App() {
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/users/profile" element={<UserProfilePage/>}/>
                 <Route path="/announcements/my" element={<MyAnnouncementPage/>}/>
-                <Route path="/users/public/:id" element={<publicUserProfile/>}/>
+                <Route path="/users/public/:id" element={<PublicUserProfile/>}/>
             </Routes>
         </BrowserRouter>
     </UserProvider>
