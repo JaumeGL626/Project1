@@ -1,6 +1,6 @@
 package com.example.demo.enums;
 
-public enum Chat {
+public enum ChatType {
     SUBFORUM,
     PRIVATE,
     GROUP

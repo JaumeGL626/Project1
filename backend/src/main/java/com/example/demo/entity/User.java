@@ -28,7 +28,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     List<Announcement> announcementList= new ArrayList<>();
     @OneToMany(mappedBy = "user")
-    List<Message>messages;
+    List<Message>messages=new ArrayList<>();
+    @ManyToMany(mappedBy = "user")
+    List<Chat> chats=new ArrayList<>();
 
 
 }
