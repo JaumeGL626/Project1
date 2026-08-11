@@ -26,10 +26,13 @@ public class User {
     private Role role;
     private String profilePicture;
     @OneToMany(mappedBy = "user")
+    @Builder.Default
     List<Announcement> announcementList= new ArrayList<>();
     @OneToMany(mappedBy = "user")
+    @Builder.Default
     List<Message>messages=new ArrayList<>();
-    @ManyToMany(mappedBy = "user")
+    @ManyToMany(mappedBy = "participants")
+    @Builder.Default
     List<Chat> chats=new ArrayList<>();
 
 

@@ -1,19 +1,25 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "sub_forums")
 public class SubForum {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String description;
-    @OneToMany
-    private List<Chat>subChats=new ArrayList<>();
+    @OneToMany(mappedBy = "subForum")
+    @Builder.Default
+    private List<Chat> subChats = new ArrayList<>();
 }
