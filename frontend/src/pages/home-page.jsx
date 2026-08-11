@@ -6,6 +6,7 @@ import Header from '../components/HeaderComponent';
 import Navigation from '../components/NavigatonComponent';
 import { announcementService } from '../services/announcementService';
 import { imageService } from '../services/imageService';
+import { useNavigate } from 'react-router-dom';
 
 function HomePage() {
 
@@ -19,6 +20,7 @@ function HomePage() {
     const[onEdit, setOnEdit]=useState("");
     const[isEditing,setIsEditing]=useState(false);
     const [onDelete,setOnDelete]=useState("");
+    const navigate = useNavigate();
     
 
     
@@ -82,6 +84,10 @@ function HomePage() {
             setSelectedFiles(Array.from(e.target.files));
         }
     }
+
+    function handleUserPublicProfile(ownerId){
+        navigate(`/users/public/${ownerId}`);
+    }
     
 
     if(loading){
@@ -120,7 +126,7 @@ function HomePage() {
             <div className="announcementBody">
                     {announcement.length>0 ? (
                         announcement.map((announcement)=>(
-                            <AnnouncementCard key={announcement.id} announcement={announcement} isEditing={isEditing} onEdit={onEdit} onDelete={onDelete} />
+                            <AnnouncementCard key={announcement.id} announcement={announcement} isEditing={isEditing} onEdit={onEdit} onDelete={onDelete} onProfileClick={handleUserPublicProfile}/>
                         ))
                     ):(
                         <p>No hi han anuncis publicats</p>

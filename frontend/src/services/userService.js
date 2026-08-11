@@ -21,5 +21,9 @@ export const userService ={
                 profilePicture: imgData.url
             })
         })
+    },
+
+    getPublicProfile: async(ownerId)=> {
+        return await apiClient(`/users/${ownerId}`);
     }
 };
