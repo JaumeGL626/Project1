@@ -4,7 +4,7 @@ import com.example.demo.enums.ChatType;
 
 import java.util.List;
 
-public record ChatResposne(
+public record ChatResponse(
         Long id,
         ChatType chatType,
         String name,
