@@ -1,14 +1,19 @@
 package com.example.demo.mapper;
 
 import com.example.demo.dto.ChatRequest;
+import com.example.demo.dto.ChatResponse;
 import com.example.demo.entity.Chat;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel ="spring")
+@Mapper(componentModel ="spring",uses = {UserMapper.class})
 public interface ChatMapper {
-    ChatRequest chatToChatRequest(Chat chat);
+    @Mapping(source = "subForum.id", target = "subForumId")
 
-    List<ChatRequest> listChatToListChatRequest(List<Chat> chatList);
+    ChatResponse chatToChatResponse(Chat chat);
+
+    List<ChatResponse> listChatToListChatResponse(List<Chat> chatList);
+
 }
