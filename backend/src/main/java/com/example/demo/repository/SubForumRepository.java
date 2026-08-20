@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface SubForumRepository extends JpaRepository<SubForum,Long> {
 
-    //List<SubForum> findBuForumId(Long id);
+    List<SubForum> findByForumId(Long id);
     boolean existsByName(String name);
 }
