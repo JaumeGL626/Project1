@@ -6,7 +6,8 @@ public record SubForumResponse(
     Long id,
     String name,
     String description,
-    List<ChatResponse> subChats
+    List<ChatResponse> subChats,
+    Long forumId
 
 ) {
 }

@@ -12,17 +12,16 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "sub_forums")
-public class SubForum {
+@Table(name = "forum")
+public class Forum {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String description;
-    @OneToMany(mappedBy = "subForum")
+    @OneToMany
     @Builder.Default
-    private List<Chat> subChats = new ArrayList<>();
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Forum forum;
+    private List<SubForum> subForums = new ArrayList<>();
 
 }
+
