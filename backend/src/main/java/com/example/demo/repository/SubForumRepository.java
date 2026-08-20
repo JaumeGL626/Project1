@@ -10,4 +10,5 @@ public interface SubForumRepository extends JpaRepository<SubForum,Long> {
 
     List<SubForum> findByForumId(Long id);
     boolean existsByName(String name);
+    List<SubForum> findByForumIdOrderByNameAsc(Long id);
 }
