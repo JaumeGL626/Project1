@@ -69,7 +69,7 @@ public class ChatService {
         chatRepository.delete(chat);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<ChatResponse> getAllMyChats(String email){
         User user= userRepository.findByEmail(email).orElseThrow(()-> new ResponseStatusException(
                 HttpStatus.NOT_FOUND,
