@@ -35,12 +35,12 @@ public class MessageService {
         this.chatRepository=chatRepository;
     }
     @Transactional
-    public MessageResponse postMessage (String email, MessageRequest messageRequest, Long id){
+    public MessageResponse postMessage (String email, MessageRequest messageRequest, Long idChat){
         User user= userRepository.findByEmail(email).orElseThrow(()-> new ResponseStatusException(
                 HttpStatus.NOT_FOUND,
                 "User not found"
         ));
-        Chat chat=chatRepository.findById(id).orElseThrow(()-> new ResponseStatusException(
+        Chat chat=chatRepository.findById(idChat).orElseThrow(()-> new ResponseStatusException(
                 HttpStatus.NOT_FOUND,
                 "Chat not found"
         ));
@@ -50,23 +50,23 @@ public class MessageService {
         message.setDateCreated(LocalDateTime.now());
         message.setUser(user);
         message.setChat(chat);
-
+        messageRepository.save(message);
         return  messageMapper.messageToMessageResponse(message);
 
     }
     @Transactional
-    public List<MessageResponse> getMessagebyChat  (String email,Long id){
+    public List<MessageResponse> getMessagebyChat  (String email,Long idChat){
         User user= userRepository.findByEmail(email).orElseThrow(()-> new ResponseStatusException(
                 HttpStatus.NOT_FOUND,
                 "User not found"
         ));
 
-        Chat chat=chatRepository.findById(id).orElseThrow(()-> new ResponseStatusException(
+        Chat chat=chatRepository.findById(idChat).orElseThrow(()-> new ResponseStatusException(
                 HttpStatus.NOT_FOUND,
                 "Chat not found"
         ));
 
-        List<Message> messageList=messageRepository.findByChatIdOrderByDateCreatedAsc(id);
+        List<Message> messageList=messageRepository.findByChatIdOrderByDateCreatedAsc(idChat);
         return messageMapper.listMessageToListMessageResonse(messageList);
 
     }

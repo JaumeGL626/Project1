@@ -8,6 +8,7 @@ import com.example.demo.entity.User;
 import com.example.demo.mapper.SubForumMapper;
 import com.example.demo.repository.ForumRepository;
 import com.example.demo.repository.SubForumRepository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,7 +27,7 @@ public class SubForumService {
         this.forumRepository=forumRepository;
         this.subForumRepository=subForumRepository;
     }
-
+    @Transactional
     public SubForumResponse createSubForum(SubForumRequest request){
         SubForum subForum=new SubForum();
         subForum.setDescription(request.description());
@@ -37,9 +38,11 @@ public class SubForumService {
 
         subForum.setName(request.name());
         subForum.setSubChats(null);
+        subForum.setForum(forum);
+        subForumRepository.save(subForum);
         return subForumMapper.subForumToSubForumResponse(subForum);
     }
-
+    @Transactional(readOnly=true)
     public List<SubForumResponse> getSubForumsByForumId(Long forumId) {
         List<SubForum> subForums = subForumRepository.findByForumIdOrderByNameAsc(forumId);
         return subForumMapper.listSubForumToListSubForumResponse(subForums);
