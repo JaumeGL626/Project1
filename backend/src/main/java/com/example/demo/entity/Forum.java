@@ -3,6 +3,7 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,12 @@ public class Forum {
     private Long id;
     private String name;
     private String description;
-    @OneToMany
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "created_by_user_id")
+    private User createdBy;
+
+    private LocalDateTime createdAt;
+    @OneToMany(mappedBy = "forum")
     @Builder.Default
     private List<SubForum> subForums = new ArrayList<>();
 

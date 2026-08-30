@@ -8,6 +8,7 @@ import com.example.demo.entity.User;
 import com.example.demo.mapper.SubForumMapper;
 import com.example.demo.repository.ForumRepository;
 import com.example.demo.repository.SubForumRepository;
+import com.example.demo.repository.UserRepository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -21,24 +22,31 @@ public class SubForumService {
     private final SubForumRepository subForumRepository;
     private final ForumRepository forumRepository;
     private final SubForumMapper subForumMapper;
+    private final UserRepository userRepository;
 
-    public SubForumService (SubForumRepository subForumRepository, SubForumMapper subForumMapper, ForumRepository forumRepository){
+    public SubForumService (SubForumRepository subForumRepository, SubForumMapper subForumMapper, ForumRepository forumRepository, UserRepository userRepository){
         this.subForumMapper=subForumMapper;
         this.forumRepository=forumRepository;
         this.subForumRepository=subForumRepository;
+        this.userRepository=userRepository;
     }
     @Transactional
-    public SubForumResponse createSubForum(SubForumRequest request){
+    public SubForumResponse createSubForum(SubForumRequest request, String  email){
         SubForum subForum=new SubForum();
         subForum.setDescription(request.description());
         Forum forum= forumRepository.findById(request.forumId()).orElseThrow(()-> new ResponseStatusException(
                 HttpStatus.NOT_FOUND,
                 "Forum not found"
         ));
+        User user= userRepository.findByEmail(email).orElseThrow(()-> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "User not found"
+        ));
 
         subForum.setName(request.name());
         subForum.setSubChats(null);
         subForum.setForum(forum);
+        subForum.setCreatedBy(user);
         subForumRepository.save(subForum);
         return subForumMapper.subForumToSubForumResponse(subForum);
     }

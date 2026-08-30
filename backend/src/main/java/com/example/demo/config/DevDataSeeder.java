@@ -105,12 +105,16 @@ public class DevDataSeeder implements CommandLineRunner {
         Forum forum1 = Forum.builder()
                 .name("Club de futbol")
                 .description("Aquest es el forum oficial del club de futbol, animeu-vos a participar!")
+                .createdBy(user1)
+                .createdAt(LocalDateTime.now())
                 .build();
         forumRepository.save(forum1);
 
         Forum forum2 = Forum.builder()
                 .name("Club Otaku")
                 .description("Aquest es el forum oficial del club otaku (En desenvolupament)")
+                .createdBy(user1)
+                .createdAt(LocalDateTime.now())
                 .build();
         forumRepository.save(forum2);
 
