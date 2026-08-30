@@ -2,11 +2,10 @@
 package com.example.demo.config;
 
 import com.example.demo.controller.AuthController;
-import com.example.demo.entity.Announcement;
-import com.example.demo.entity.User;
+import com.example.demo.entity.*;
+import com.example.demo.enums.ChatType;
 import com.example.demo.enums.Role;
-import com.example.demo.repository.AnnouncementRepository;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.*;
 import com.example.demo.service.AuthService;
 import com.example.demo.service.UserService;
 import org.slf4j.LoggerFactory;
@@ -17,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -28,23 +28,36 @@ public class DevDataSeeder implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final AnnouncementRepository announcementRepository;
+    private final ForumRepository forumRepository;
+    private final SubForumRepository subForumRepository;
+    private final ChatRepository chatRepository;
+    private final MessageRepository messageRepository;
 
 
-    public DevDataSeeder(UserRepository userRepository, PasswordEncoder passwordEncoder, AnnouncementRepository announcementRepository){
+    public DevDataSeeder(UserRepository userRepository, PasswordEncoder passwordEncoder, AnnouncementRepository announcementRepository,
+                         ForumRepository forumRepository, SubForumRepository subForumRepository, ChatRepository chatRepository, MessageRepository messageRepository){
         this.userRepository=userRepository;
         this.passwordEncoder= passwordEncoder;
         this.announcementRepository=announcementRepository;
+        this.forumRepository=forumRepository;
+        this.subForumRepository=subForumRepository;
+        this.chatRepository=chatRepository;
+        this.messageRepository=messageRepository;
 
 
     }
     @Override
     public void run (String... args){
         logger.info("Inicialitzant dades de desenvolupament...");
+        messageRepository.deleteAll();
+        chatRepository.deleteAll();
+        subForumRepository.deleteAll();
+        forumRepository.deleteAll();
         announcementRepository.deleteAll();
         userRepository.deleteAll();
 
 
-
+        //Users
 
 
         User user1= User.builder()
@@ -67,6 +80,8 @@ public class DevDataSeeder implements CommandLineRunner {
                 .build();
         userRepository.save(user2);
 
+        //Announcements
+
         Announcement announcement1= Announcement.builder()
                 .date(LocalDateTime.now())
                 .urlPhotos(List.of("https://res.cloudinary.com/swafuttr/image/upload/v1784670128/udg_universitat_girona_nuevo_logo_b6xukw.jpg","https://res.cloudinary.com/swafuttr/image/upload/v1784670185/publicacio_buxvl0.jpg"))
@@ -85,7 +100,99 @@ public class DevDataSeeder implements CommandLineRunner {
                 .build();
         announcementRepository.save(announcement2);
 
+        //forum
+
+        Forum forum1 = Forum.builder()
+                .name("Club de futbol")
+                .description("Aquest es el forum oficial del club de futbol, animeu-vos a participar!")
+                .build();
+        forumRepository.save(forum1);
+
+        Forum forum2 = Forum.builder()
+                .name("Club Otaku")
+                .description("Aquest es el forum oficial del club otaku (En desenvolupament)")
+                .build();
+        forumRepository.save(forum2);
+
+        //subforum
+
+        SubForum subForum1 = SubForum.builder()
+                .name("Partits amistosos")
+                .description("Aqui en parlarem sobre els partis amistosos")
+                .forum(forum1)
+                .build();
+        subForumRepository.save(subForum1);
+
+        SubForum subForum2 = SubForum.builder()
+                .name("Apartat de preguntes")
+                .description("Qualsevol dubte, no tingueu por de preguntar")
+                .forum(forum1)
+                .build();
+        subForumRepository.save(subForum2);
+
+        SubForum subForum3 = SubForum.builder()
+                .name("Anuncis")
+                .description("Aqui deixarem tot anunci interesant")
+                .forum(forum1)
+                .build();
+        subForumRepository.save(subForum3);
+
+        //  Chats subforum
+        Chat chat1 = Chat.builder()
+                .name("Alineacions")
+                .chatType(ChatType.SUBFORUM)
+                .subForum(subForum1)
+                .participants(List.of(user1, user2))
+                .build();
+        chatRepository.save(chat1);
+
+        Chat chat2 = Chat.builder()
+                .name("Propostes de jugades")
+                .chatType(ChatType.SUBFORUM)
+                .subForum(subForum1)
+                .participants(List.of(user1, user2))
+                .build();
+        chatRepository.save(chat2);
+
+        // Messages chat1
+        Message message1 = Message.builder()
+                .content("Inici de la epica conversacio!")
+                .dateCreated(LocalDateTime.now())
+                .filesUrl(Collections.emptyList())
+                .user(user1)
+                .chat(chat1)
+                .build();
+        messageRepository.save(message1);
+
+        Message message2 = Message.builder()
+                .content("Fem servir una alineacio 4-4-2!")
+                .dateCreated(LocalDateTime.now())
+                .filesUrl(Collections.emptyList())
+                .user(user2)
+                .chat(chat1)
+                .build();
+        messageRepository.save(message2);
+
+        // Private chat
+        Chat chat5 = Chat.builder()
+                .name("BestFriend")
+                .chatType(ChatType.PRIVATE)
+                .participants(List.of(user1, user2))
+                .build();
+        chatRepository.save(chat5);
+
+        Message message3 = Message.builder()
+                .content("Aquest es el inici de la nostra epica conversacio!")
+                .dateCreated(LocalDateTime.now())
+                .filesUrl(Collections.emptyList())
+                .user(user1)
+                .chat(chat5)
+                .build();
+        messageRepository.save(message3);
 
     }
+
+
+
 
 }
