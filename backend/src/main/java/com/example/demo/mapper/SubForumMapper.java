@@ -11,6 +11,7 @@ import java.util.List;
 @Mapper(componentModel ="spring", uses = {ChatMapper.class})
 public interface SubForumMapper {
     @Mapping(source = "forum.id", target = "forumId")
+    @Mapping(source = "createdBy.id", target = "createdByUserId")
     SubForumResponse subForumToSubForumResponse(SubForum subForum);
 
     List<SubForumResponse> listSubForumToListSubForumResponse(List<SubForum> subForumList);

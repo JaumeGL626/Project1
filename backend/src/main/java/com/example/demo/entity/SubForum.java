@@ -19,6 +19,9 @@ public class SubForum {
     private Long id;
     private String name;
     private String description;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "created_by_user_id")
+    private User createdBy;
     @OneToMany(mappedBy = "subForum")
     @Builder.Default
     private List<Chat> subChats = new ArrayList<>();
