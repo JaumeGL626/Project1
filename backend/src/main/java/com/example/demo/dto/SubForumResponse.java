@@ -9,8 +9,7 @@ public record SubForumResponse(
     String description,
     List<ChatResponse> subChats,
     Long forumId,
-    Long createdByUserId,
-    LocalDateTime createdAt
+    Long createdByUserId
 
 ) {
 }

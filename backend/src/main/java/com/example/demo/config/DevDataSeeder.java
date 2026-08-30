@@ -68,7 +68,7 @@ public class DevDataSeeder implements CommandLineRunner {
                 .role(Role.USER)
                 .profilePicture("https://res.cloudinary.com/swafuttr/image/upload/v1783977983/best-profile-pictures-2h94ge4qz9y05dbw_t8nika.jpg")
                 .build();
-        userRepository.save(user1);
+        user1=userRepository.save(user1);
 
         User user2= User.builder()
                 .username("kai")
@@ -78,7 +78,7 @@ public class DevDataSeeder implements CommandLineRunner {
                 .role(Role.USER)
                 .profilePicture("https://res.cloudinary.com/swafuttr/image/upload/v1786200818/gdwg21xuvcwzbcefyz5e.png")
                 .build();
-        userRepository.save(user2);
+        user2=userRepository.save(user2);
 
         //Announcements
 
@@ -108,7 +108,7 @@ public class DevDataSeeder implements CommandLineRunner {
                 .createdBy(user1)
                 .createdAt(LocalDateTime.now())
                 .build();
-        forumRepository.save(forum1);
+        forum1=forumRepository.save(forum1);
 
         Forum forum2 = Forum.builder()
                 .name("Club Otaku")
@@ -116,7 +116,7 @@ public class DevDataSeeder implements CommandLineRunner {
                 .createdBy(user1)
                 .createdAt(LocalDateTime.now())
                 .build();
-        forumRepository.save(forum2);
+        forum2=forumRepository.save(forum2);
 
         //subforum
 
@@ -124,22 +124,25 @@ public class DevDataSeeder implements CommandLineRunner {
                 .name("Partits amistosos")
                 .description("Aqui en parlarem sobre els partis amistosos")
                 .forum(forum1)
+                .createdBy(user1)
                 .build();
-        subForumRepository.save(subForum1);
+        subForum1=subForumRepository.save(subForum1);
 
         SubForum subForum2 = SubForum.builder()
                 .name("Apartat de preguntes")
                 .description("Qualsevol dubte, no tingueu por de preguntar")
                 .forum(forum1)
+                .createdBy(user1)
                 .build();
-        subForumRepository.save(subForum2);
+        subForum2=subForumRepository.save(subForum2);
 
         SubForum subForum3 = SubForum.builder()
                 .name("Anuncis")
                 .description("Aqui deixarem tot anunci interesant")
                 .forum(forum1)
+                .createdBy(user1)
                 .build();
-        subForumRepository.save(subForum3);
+        subForum3=subForumRepository.save(subForum3);
 
         //  Chats subforum
         Chat chat1 = Chat.builder()
@@ -148,7 +151,7 @@ public class DevDataSeeder implements CommandLineRunner {
                 .subForum(subForum1)
                 .participants(List.of(user1, user2))
                 .build();
-        chatRepository.save(chat1);
+        chat1=chatRepository.save(chat1);
 
         Chat chat2 = Chat.builder()
                 .name("Propostes de jugades")
@@ -156,7 +159,7 @@ public class DevDataSeeder implements CommandLineRunner {
                 .subForum(subForum1)
                 .participants(List.of(user1, user2))
                 .build();
-        chatRepository.save(chat2);
+        chat2=chatRepository.save(chat2);
 
         // Messages chat1
         Message message1 = Message.builder()
@@ -166,7 +169,7 @@ public class DevDataSeeder implements CommandLineRunner {
                 .user(user1)
                 .chat(chat1)
                 .build();
-        messageRepository.save(message1);
+        message1=messageRepository.save(message1);
 
         Message message2 = Message.builder()
                 .content("Fem servir una alineacio 4-4-2!")
@@ -175,7 +178,7 @@ public class DevDataSeeder implements CommandLineRunner {
                 .user(user2)
                 .chat(chat1)
                 .build();
-        messageRepository.save(message2);
+        message2=messageRepository.save(message2);
 
         // Private chat
         Chat chat5 = Chat.builder()
@@ -183,7 +186,7 @@ public class DevDataSeeder implements CommandLineRunner {
                 .chatType(ChatType.PRIVATE)
                 .participants(List.of(user1, user2))
                 .build();
-        chatRepository.save(chat5);
+        chat5=chatRepository.save(chat5);
 
         Message message3 = Message.builder()
                 .content("Aquest es el inici de la nostra epica conversacio!")
@@ -192,7 +195,7 @@ public class DevDataSeeder implements CommandLineRunner {
                 .user(user1)
                 .chat(chat5)
                 .build();
-        messageRepository.save(message3);
+        message3=messageRepository.save(message3);
 
     }
 
