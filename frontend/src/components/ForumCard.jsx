@@ -1,4 +1,3 @@
-import { Italic } from "lucide-react";
 import React from "react";
 
 export const ForumCard=({forum, onNameClick = () => {}})=>{
@@ -16,3 +15,4 @@ export const ForumCard=({forum, onNameClick = () => {}})=>{
     )
 
 }
+export default ForumCard
