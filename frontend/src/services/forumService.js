@@ -17,5 +17,5 @@ export const forumService={
     },
     getForumById: async (id) => {
     return await apiClient(`/forums/${id}`);
-  },
+    }
 };
