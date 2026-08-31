@@ -1,0 +1,12 @@
+.cardForum{
+    border: solid black ;
+    border-radius: 30px;
+    width: 100%;
+    cursor: pointer;
+}
+
+
+
+.forumBody{
+    gap: 15px;
+}

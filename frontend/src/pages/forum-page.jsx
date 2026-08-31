@@ -4,9 +4,10 @@ import { useEffect, useState } from 'react';
 import ForumCard from '../components/ForumCard'
 import { forumService } from '../services/forumService'; 
 import { useNavigate } from 'react-router-dom';
+import '../styles/ForumCardStyle.css'
 function ForumPage(){
 
-    
+
     const [searchTerm, setSearchTerm] = useState('');
     const [forums,setForums]=useState([]);
     const [error,setError]=useState("");
