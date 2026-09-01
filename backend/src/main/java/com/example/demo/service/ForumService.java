@@ -53,4 +53,12 @@ public class ForumService {
         List<Forum> forums = forumRepository.findAllByOrderByNameAsc();
         return forumMapper.listForumToListForumResponse(forums);
     }
+    @Transactional(readOnly = true)
+    public ForumResponse getForumById(Long id){
+        Forum forum=forumRepository.findById(id).orElseThrow(()-> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "Forum not found"
+        ));
+        return forumMapper.forumToForumResponse(forum);
+    }
 }
