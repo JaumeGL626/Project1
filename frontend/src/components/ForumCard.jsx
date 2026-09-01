@@ -1,5 +1,5 @@
 import React from "react";
-
+import '../styles/ForumCardStyle.css'
 export const ForumCard=({forum, onNameClick = () => {}})=>{
     const{id, name, description, createdByUserId, createdAt}= forum;
     return(

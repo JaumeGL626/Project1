@@ -7,6 +7,7 @@ import { UserProvider } from "./context/UserProvider";
 import MyAnnouncementPage from"./pages/MyAnnouncements-page";
 import PublicUserProfile from "./pages/publicUserProfile-page";
 import ForumPage from "./pages/forum-page";
+import SpecificForumPage from "./pages/specificForum-page";
 function App() {
 
   return (
@@ -19,6 +20,7 @@ function App() {
                 <Route path="/announcements/my" element={<MyAnnouncementPage/>}/>
                 <Route path="/users/public/:id" element={<PublicUserProfile/>}/>
                 <Route path="/forums" element={<ForumPage/>}/>
+                <Route path="/forums/:id" element={<SpecificForumPage/>}/>
             </Routes>
         </BrowserRouter>
     </UserProvider>

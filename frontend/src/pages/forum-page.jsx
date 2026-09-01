@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import ForumCard from '../components/ForumCard'
 import { forumService } from '../services/forumService'; 
 import { useNavigate } from 'react-router-dom';
-import '../styles/ForumCardStyle.css'
+import '../styles/Forum-page.css'
 function ForumPage(){
 
 
@@ -36,15 +36,19 @@ return(
     <>
         <Header/>
         <Navigation/>
-        <div className="search-bar-container">
-            <input
-                type="search"
-                placeholder="Buscar Forum..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+        <div className='userOptions'>
+          {/*  <button className='butonCreateForum'> Crear Forum</button>  maybe this in user Options (my adds, my profile...)*/}
+            <div className="search-bar-container">
+                <input
+                    type="search"
+                    placeholder="Buscar Forum..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
 
-            />
+                    />
+            </div>
         </div>
+        
 
         <div className='forumList'>
           {  forums.length>0 ?(
