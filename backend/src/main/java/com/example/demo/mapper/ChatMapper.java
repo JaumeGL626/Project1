@@ -8,10 +8,10 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel ="spring",uses = {UserMapper.class})
+@Mapper(componentModel ="spring",uses = {UserMapper.class, MessageMapper.class})
 public interface ChatMapper {
     @Mapping(source = "subForum.id", target = "subForumId")
-
+    @Mapping(source = "messages", target = "listMessages")
     ChatResponse chatToChatResponse(Chat chat);
 
     List<ChatResponse> listChatToListChatResponse(List<Chat> chatList);

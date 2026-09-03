@@ -10,7 +10,8 @@ public record ChatResponse(
         String name,
         List<UserProfileDto> participants,
         Long subForumId,
-        MessageResponse lastMessage
+        MessageResponse lastMessage,
+        List<MessageResponse> listMessages
 
 ) {
 }
