@@ -36,5 +36,10 @@ public class ForumController {
         List<ForumResponse> forumResponseList=forumService.getAllForums();
         return ResponseEntity.status(HttpStatus.OK).body(forumResponseList);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<ForumResponse> getForumById(@PathVariable Long id) {
+        ForumResponse forumResponse = forumService.getForumById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(forumResponse);
+    }
 
 }

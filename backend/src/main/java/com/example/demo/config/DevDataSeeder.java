@@ -8,6 +8,7 @@ import com.example.demo.enums.Role;
 import com.example.demo.repository.*;
 import com.example.demo.service.AuthService;
 import com.example.demo.service.UserService;
+import jakarta.transaction.Transactional;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.boot.CommandLineRunner;
@@ -16,11 +17,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 
 @Component
+@Transactional
 @Profile("dev")
 public class DevDataSeeder implements CommandLineRunner {
 
@@ -149,7 +152,8 @@ public class DevDataSeeder implements CommandLineRunner {
                 .name("Alineacions")
                 .chatType(ChatType.SUBFORUM)
                 .subForum(subForum1)
-                .participants(List.of(user1, user2))
+                .participants(new ArrayList<>(List.of(user1, user2)))
+                .messages(new ArrayList<>())
                 .build();
         chat1=chatRepository.save(chat1);
 
@@ -157,7 +161,8 @@ public class DevDataSeeder implements CommandLineRunner {
                 .name("Propostes de jugades")
                 .chatType(ChatType.SUBFORUM)
                 .subForum(subForum1)
-                .participants(List.of(user1, user2))
+                .messages(new ArrayList<>())
+                .participants(new ArrayList<>(List.of(user1, user2)))
                 .build();
         chat2=chatRepository.save(chat2);
 
@@ -165,37 +170,43 @@ public class DevDataSeeder implements CommandLineRunner {
         Message message1 = Message.builder()
                 .content("Inici de la epica conversacio!")
                 .dateCreated(LocalDateTime.now())
-                .filesUrl(Collections.emptyList())
+                .filesUrl(new ArrayList<>())
                 .user(user1)
                 .chat(chat1)
                 .build();
         message1=messageRepository.save(message1);
+        chat1.getMessages().add(message1);
+        chatRepository.save(chat1);
 
         Message message2 = Message.builder()
                 .content("Fem servir una alineacio 4-4-2!")
                 .dateCreated(LocalDateTime.now())
-                .filesUrl(Collections.emptyList())
+                .filesUrl(new ArrayList<>())
                 .user(user2)
                 .chat(chat1)
                 .build();
         message2=messageRepository.save(message2);
+        chat1.getMessages().add(message2);
+        chat1=chatRepository.save(chat1);
 
         // Private chat
         Chat chat5 = Chat.builder()
                 .name("BestFriend")
                 .chatType(ChatType.PRIVATE)
-                .participants(List.of(user1, user2))
+                .participants(new ArrayList<>(List.of(user1, user2)))
                 .build();
         chat5=chatRepository.save(chat5);
 
         Message message3 = Message.builder()
                 .content("Aquest es el inici de la nostra epica conversacio!")
                 .dateCreated(LocalDateTime.now())
-                .filesUrl(Collections.emptyList())
+                .filesUrl(new ArrayList<>())
                 .user(user1)
                 .chat(chat5)
                 .build();
         message3=messageRepository.save(message3);
+        chat5.getMessages().add(message3);
+        chatRepository.save(chat5);
 
     }
 

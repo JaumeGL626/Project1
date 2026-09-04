@@ -1,0 +1,19 @@
+.userOptions{
+    display: flex;
+    flex-direction:row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    width: 40%;
+    padding: 0px;
+    
+}
+
+.forumList{
+    width: 70%;
+}
+
+.search-bar-container{
+    width: 100%;
+
+ 
+}
