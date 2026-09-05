@@ -55,6 +55,17 @@ public class SubForumService {
         List<SubForum> subForums = subForumRepository.findByForumIdOrderByNameAsc(forumId);
         return subForumMapper.listSubForumToListSubForumResponse(subForums);
     }
+    @Transactional
+    public SubForumResponse editSubForum(Long id, SubForumRequest request){
+
+        SubForum subForum= subForumRepository.findById(id).orElseThrow(()-> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "SubFOrum not found"
+        ));
+        subForum.setDescription(request.description());
+        subForum.setName(request.name());
+        return subForumMapper.subForumToSubForumResponse(subForum);
+    }
 
 
 
