@@ -22,14 +22,6 @@ public class SubForumController {
         this.jwtService=jwtService;
     }
 
-    @PostMapping
-    ResponseEntity<SubForumResponse> postSubForumId(@RequestHeader("Authorization") String authHeader, @Valid @RequestBody SubForumRequest request){
-        String token = authHeader.replace("Bearer ", "");
-        String email= jwtService.extractUsername(token);
-        SubForumResponse subForumResponse=subForumService.createSubForum(request, email);
-        return ResponseEntity.status(HttpStatus.CREATED).body(subForumResponse);
-
-    }
     @GetMapping(path = "/forum/{forumId}")
     ResponseEntity<List<SubForumResponse>> getAllSUbForumsbyForum(@RequestHeader("Authorization") String authHeader, @PathVariable Long forumId){
         List<SubForumResponse> subForumResponseList=subForumService.getSubForumsByForumId(forumId);
@@ -42,6 +34,14 @@ public class SubForumController {
         String email= jwtService.extractUsername(token);
         SubForumResponse subForumResponse=subForumService.editSubForum(subForumId,request);
         return ResponseEntity.status(HttpStatus.OK).body(subForumResponse);
+    }
+    @PostMapping("/forums/{forumId}/subForum")
+    public ResponseEntity<SubForumResponse> addNewSubForumInFOrum(@RequestHeader("Authorization") String authHeader, @Valid @RequestBody SubForumRequest request, @PathVariable Long forumId){
+        String token = authHeader.replace("Bearer ", "");
+        String email= jwtService.extractUsername(token);
+        SubForumResponse subForumResponse=subForumService.addSubForumToForum(forumId,request,email);
+        return ResponseEntity.status(HttpStatus.CREATED).body(subForumResponse);
+
     }
 
 

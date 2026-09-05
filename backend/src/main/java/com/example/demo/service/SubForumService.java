@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,26 +31,7 @@ public class SubForumService {
         this.subForumRepository=subForumRepository;
         this.userRepository=userRepository;
     }
-    @Transactional
-    public SubForumResponse createSubForum(SubForumRequest request, String  email){
-        SubForum subForum=new SubForum();
-        subForum.setDescription(request.description());
-        Forum forum= forumRepository.findById(request.forumId()).orElseThrow(()-> new ResponseStatusException(
-                HttpStatus.NOT_FOUND,
-                "Forum not found"
-        ));
-        User user= userRepository.findByEmail(email).orElseThrow(()-> new ResponseStatusException(
-                HttpStatus.NOT_FOUND,
-                "User not found"
-        ));
 
-        subForum.setName(request.name());
-        subForum.setSubChats(null);
-        subForum.setForum(forum);
-        subForum.setCreatedBy(user);
-        subForumRepository.save(subForum);
-        return subForumMapper.subForumToSubForumResponse(subForum);
-    }
     @Transactional(readOnly=true)
     public List<SubForumResponse> getSubForumsByForumId(Long forumId) {
         List<SubForum> subForums = subForumRepository.findByForumIdOrderByNameAsc(forumId);
@@ -65,6 +47,26 @@ public class SubForumService {
         subForum.setDescription(request.description());
         subForum.setName(request.name());
         return subForumMapper.subForumToSubForumResponse(subForum);
+    }
+    @Transactional
+    public SubForumResponse addSubForumToForum(Long forumId, SubForumRequest request, String email){
+        Forum forum= forumRepository.findById(forumId).orElseThrow(()-> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "Forum not found"
+        ));
+        User user= userRepository.findByEmail(email).orElseThrow(()-> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "User not found"
+        ));
+        SubForum subForum= new SubForum();
+        subForum.setName(request.name());
+        subForum.setDescription(request.description());
+        subForum.setCreatedBy(user);
+        subForum.setSubChats(new ArrayList<>());
+        subForum.setForum(forum);
+        subForumRepository.save(subForum);
+        return subForumMapper.subForumToSubForumResponse(subForum);
+
     }
 
 
