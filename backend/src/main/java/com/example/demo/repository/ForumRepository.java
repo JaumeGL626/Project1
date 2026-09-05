@@ -10,6 +10,7 @@ public interface ForumRepository extends JpaRepository<Forum,Long> {
 
     Optional <Forum > findById(Long id);
     List<Forum> findAllByOrderByNameAsc();
+    List<Forum>findAllByCreatedById(Long id);
 
 
 }

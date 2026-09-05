@@ -41,5 +41,12 @@ public class ForumController {
         ForumResponse forumResponse = forumService.getForumById(id);
         return ResponseEntity.status(HttpStatus.OK).body(forumResponse);
     }
+    @GetMapping("/me")
+    public ResponseEntity<List<ForumResponse>> getAllMyForums(@RequestHeader("Authorization") String authHeader){
+        String token = authHeader.replace("Bearer ", "");
+        String email= jwtService.extractUsername(token);
+        List<ForumResponse> forumResponses=forumService.getAllMyForums(email);
+        return ResponseEntity.status(HttpStatus.OK).body(forumResponses);
+    }
 
 }

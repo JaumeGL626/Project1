@@ -61,4 +61,13 @@ public class ForumService {
         ));
         return forumMapper.forumToForumResponse(forum);
     }
+    @Transactional(readOnly = true)
+    public List<ForumResponse> getAllMyForums(String email){
+        User user=userRepository.findByEmail(email).orElseThrow(()-> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "User not found"
+        ));
+        List<Forum> forumList=forumRepository.findAllByCreatedById(user.getId());
+        return forumMapper.listForumToListForumResponse(forumList);
+    }
 }
