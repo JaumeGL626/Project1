@@ -70,4 +70,15 @@ public class ForumService {
         List<Forum> forumList=forumRepository.findAllByCreatedById(user.getId());
         return forumMapper.listForumToListForumResponse(forumList);
     }
+    @Transactional
+    public  ForumResponse editForum(ForumRequest request, Long id){
+        Forum forum=forumRepository.findById(id).orElseThrow(()-> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "Forum not found"
+        ));
+        forum.setName(request.name());
+        forum.setDescription(request.description());
+        forumRepository.save(forum);
+        return forumMapper.forumToForumResponse(forum);
+    }
 }

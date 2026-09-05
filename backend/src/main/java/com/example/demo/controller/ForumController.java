@@ -49,4 +49,13 @@ public class ForumController {
         return ResponseEntity.status(HttpStatus.OK).body(forumResponses);
     }
 
+    @PutMapping("{id}")
+    public  ResponseEntity<ForumResponse> editForum (@RequestHeader("Authorization") String authHeader, @PathVariable Long id,  @Valid @RequestBody ForumRequest request){
+        String token = authHeader.replace("Bearer ", "");
+        String email= jwtService.extractUsername(token);
+        ForumResponse forumResponse=forumService.editForum(request,id);
+        return ResponseEntity.status(HttpStatus.OK).body(forumResponse);
+    }
+
+
 }
