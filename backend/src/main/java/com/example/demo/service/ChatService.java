@@ -99,7 +99,6 @@ public class ChatService {
         List <Chat> chatList=chatRepository.findByParticipantsId(user.getId());
         return  chatMapper.listChatToListChatResponse(chatList);
     }
-
     @Transactional(readOnly = true)
     public List<ChatResponse> getAllChatsBySubForumId(Long id){
         SubForum subForum= subForumRepository.findById(id).orElseThrow(()-> new ResponseStatusException(
