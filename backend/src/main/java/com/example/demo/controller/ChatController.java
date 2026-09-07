@@ -24,7 +24,7 @@ public class ChatController {
         this.jwtService=jwtService;
     }
     @PostMapping
-    public  ResponseEntity<ChatResponse> postChat(@RequestHeader("Authorization") String authHeader, @Valid @RequestBody ChatRequest request){
+    public  ResponseEntity<ChatResponse> postNormalChat(@RequestHeader("Authorization") String authHeader, @Valid @RequestBody ChatRequest request){
         String token= authHeader.replace("Bearer ","");
         String email= jwtService.extractUsername(token);
 
@@ -58,7 +58,7 @@ public class ChatController {
     }
 
     @PostMapping("/forum/{forumId}/subforum/{subForumId}")
-    public  ResponseEntity<ChatResponse> postChat(@RequestHeader("Authorization") String authHeader, @Valid @RequestBody ChatRequest request, @PathVariable Long subForumId){
+    public  ResponseEntity<ChatResponse> postSubForumChat(@RequestHeader("Authorization") String authHeader, @Valid @RequestBody ChatRequest request, @PathVariable Long subForumId){
         String token= authHeader.replace("Bearer ","");
         String email= jwtService.extractUsername(token);
 
