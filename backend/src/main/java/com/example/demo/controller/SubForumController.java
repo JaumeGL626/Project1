@@ -35,7 +35,7 @@ public class SubForumController {
         SubForumResponse subForumResponse=subForumService.editSubForum(subForumId,request);
         return ResponseEntity.status(HttpStatus.OK).body(subForumResponse);
     }
-    @PostMapping("/forums/{forumId}/subForum")
+    @PostMapping("/forums/{forumId}")
     public ResponseEntity<SubForumResponse> addNewSubForumInFOrum(@RequestHeader("Authorization") String authHeader, @Valid @RequestBody SubForumRequest request, @PathVariable Long forumId){
         String token = authHeader.replace("Bearer ", "");
         String email= jwtService.extractUsername(token);
