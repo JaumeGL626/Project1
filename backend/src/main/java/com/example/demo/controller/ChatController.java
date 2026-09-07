@@ -28,7 +28,7 @@ public class ChatController {
         String token= authHeader.replace("Bearer ","");
         String email= jwtService.extractUsername(token);
 
-        ChatResponse chatResponse= chatService.createChat(email, request);
+        ChatResponse chatResponse= chatService.createNormalChat(email, request);
         return ResponseEntity.status(HttpStatus.CREATED).body(chatResponse);
     }
     @DeleteMapping(path = "/{id}")
@@ -55,6 +55,15 @@ public class ChatController {
         List<ChatResponse> chatResponseList=chatService.getAllChatsBySubForumId(subforumId);
         return ResponseEntity.status(HttpStatus.OK).body(chatResponseList);
 
+    }
+
+    @PostMapping("/forum/{forumId}/subforum/{subForumId}")
+    public  ResponseEntity<ChatResponse> postChat(@RequestHeader("Authorization") String authHeader, @Valid @RequestBody ChatRequest request, @PathVariable Long subForumId){
+        String token= authHeader.replace("Bearer ","");
+        String email= jwtService.extractUsername(token);
+
+        ChatResponse chatResponse= chatService.createChatOnSubForum(email, request, subForumId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(chatResponse);
     }
 
 

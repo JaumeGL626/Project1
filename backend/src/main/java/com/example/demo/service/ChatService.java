@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,34 +33,54 @@ public class ChatService {
     }
 
     @Transactional
-    public ChatResponse createChat(String email, ChatRequest request){
+    public ChatResponse createChatOnSubForum(String email, ChatRequest request, Long subForumId){
         User user= userRepository.findByEmail(email).orElseThrow(()-> new ResponseStatusException(
                 HttpStatus.NOT_FOUND,
                 "User not found"
         ));
 
         SubForum subForum = null;
-        if (request.subForumId() != null) {
-            subForum = subForumRepository.findById(request.subForumId()).orElseThrow(() ->
+
+            subForum = subForumRepository.findById(subForumId).orElseThrow(() ->
                     new ResponseStatusException(HttpStatus.NOT_FOUND, "SubForum not found"));
-        }
+
 
 
         Chat chat=new Chat();
         chat.setChatType(request.chatType());
-        chat.setMessages(null);
+        chat.setMessages(new ArrayList<>());
+
+
         chat.setName(request.name());
+        chat.setSubForum(subForum);
+        chatRepository.save(chat);
+        return chatMapper.chatToChatResponse(chat);
+        //in this chat we do not need participants
+    }
 
 
+    @Transactional
+    public ChatResponse createNormalChat(String email, ChatRequest request){
+        User user= userRepository.findByEmail(email).orElseThrow(()-> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "User not found"
+        ));
+        Chat chat=new Chat();
+        chat.setChatType(request.chatType());
+        chat.setMessages(new ArrayList<>());
         List<User> participants = userRepository.findAllById(request.participantIds());
         if (!participants.contains(user)) {
             participants.add(user);
         }
         chat.setParticipants(participants);
         chat.setName(request.name());
-        chat.setSubForum(subForum);
+        chatRepository.save(chat);
         return chatMapper.chatToChatResponse(chat);
+        //in this chat we do not need subForum or Forums id
     }
+
+
+
     @Transactional
     public void deleteChat(Long id){
         Chat chat=chatRepository.findById(id).orElseThrow(()-> new ResponseStatusException(
@@ -78,8 +99,7 @@ public class ChatService {
         List <Chat> chatList=chatRepository.findByParticipantsId(user.getId());
         return  chatMapper.listChatToListChatResponse(chatList);
     }
-
-    @Transactional
+    @Transactional(readOnly = true)
     public List<ChatResponse> getAllChatsBySubForumId(Long id){
         SubForum subForum= subForumRepository.findById(id).orElseThrow(()-> new ResponseStatusException(
                 HttpStatus.NOT_FOUND,

@@ -12,9 +12,10 @@
      border: 2px solid black;
     padding: 5%;
     gap: 9px;
-     position: absolute;
-    z-index: 10;
+     position: fixed;
+    z-index: 100000;
     background-color: bisque;
+    top:90px;
 }
 .buttonFormAnnouncement{
      display: flex;
