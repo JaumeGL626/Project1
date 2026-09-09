@@ -59,7 +59,7 @@ function Header(){
                             <li onClick={handleMyAnnouncements}>
                                 Mis publicaciones
                             </li>
-                            <li >
+                            <li onClick={handleMyForums}>
                                 Mis forums
                             </li>
                         </ul>
