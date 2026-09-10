@@ -51,7 +51,7 @@
     max-height: 80vh;
 }
 
-.createSubForumPopUp{
+.createSubForumPopUp, .createForumPopUp{
        
      display: flex;
      flex-direction: column;
@@ -69,7 +69,14 @@
     max-height: 80vh;
 }
 
-.chatForm, .createSubForumPopUp{
+.chatForm, .createSubForumPopUp, .postForum{
     display: flex;
     flex-direction: column;
+}
+
+.buttonOptionsUser{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 30%;
 }

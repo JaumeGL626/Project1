@@ -22,6 +22,7 @@ function MyForumPage(){
     const[newNameChat,setNewNameChat]=useState("");
     const[newNameSubForum,setnewNameSubForum]=useState("");
     const[newDescriptionSubForum,setNewDescriptionSubForum]=useState("");
+    const [popUpPostForum,setPopUpPostForum]=useState(false);
 
 
     const fetchForums = async () => {
@@ -41,6 +42,9 @@ function MyForumPage(){
 
     function handleIsEditing(){
         setIsEditing(!isEditing);
+    }
+    function handleIsPostingForum(){
+        setPopUpPostForum(!popUpPostForum);
     }
 
     function handelEditForum(forum){
@@ -64,6 +68,9 @@ function MyForumPage(){
                  setError("Error al editar forum");
         }
 
+    }
+    function handelNameForum(e){
+        setActualTitle(e.target.value);
     }
     function handleChatName(e){
        
@@ -173,6 +180,38 @@ function MyForumPage(){
         
         
     }
+    async function handlePostForum(e) {
+            e.preventDefault();
+           try{
+                    
+            const subForum= await forumService.postForum(actualTitle,actualDescription);
+
+
+            const formattedSubForum = {
+                ...subForum,
+                subChats: subForum.subChats || []
+            };
+
+            setActualForum((prevForum) => {
+
+                return {
+                    ...prevForum,
+                    subForums: [...(prevForum.subForums || []), formattedSubForum]
+                };
+            });
+
+
+            await fetchForums();
+            setActualSubForum(null);
+            setActualDescription("");
+            setActualTitle("");
+            setPopUpPostForum(false);
+            
+            }catch(err){
+                setError("Error al crear Forum");
+            }
+        
+    }
 
 
 
@@ -182,7 +221,11 @@ function MyForumPage(){
         <Header/>
         <Navigation/>
         <h3> Els meus forums</h3>
-        <button className="buttonEditAnnouncements" onClick={handleIsEditing}> Editar Forums</button>
+        <div className='buttonOptionsUser'>
+            <button className="buttonEditAnnouncements" onClick={handleIsEditing}> Editar Forums</button>
+            <button className="buttonPostAnnouncement" onClick={handleIsPostingForum}> Penjar Forums</button>
+        </div>
+        
         <div className='myForum'>
         {forums.length >0 ? (
             forums.map((forum)=>
@@ -253,7 +296,7 @@ function MyForumPage(){
                     <input type='text' onChange={handleSubForumName}/>
 
                     <label> Descripcio del Suborum que vols crear:</label>
-                    <textarea className=' textAreaForum'  onChange={(e) => setNewDescriptionSubForum(e.target.value)}></textarea>
+                    <textarea className=' textAreaForum' value={newDescriptionSubForum} onChange={(e) => setNewDescriptionSubForum(e.target.value)}></textarea>
                     <div className='buttonFormChat'>
                         <button onClick={()=> setPopUpSubForum(false)} type='button'> Cancelar</button>
                         <button type='submit'> Crear</button>
@@ -265,6 +308,25 @@ function MyForumPage(){
 
         )}
         
+        {popUpPostForum &&(
+        <div className='createForumPopUp'>
+            <form className='postForum' onSubmit={handlePostForum}>
+                <h3> Crear un Forum</h3>
+                <label> Nom del Forum que vols crear:</label>
+                <input type='text' onChange={handelNameForum}/>
+
+                <label> Descripcio del Suborum que vols crear:</label>
+                <textarea className=' textAreaForum'  onChange={(e) => setActualDescription(e.target.value)}></textarea>
+                <div className='buttonFormSubForum'>
+                    <button onClick={()=> setPopUpPostForum(false)} type='button'> Cancelar</button>
+                    <button type='submit'> Crear</button>
+                </div>
+                
+
+            </form>
+        </div>
+        )}
+    
 
         
         
