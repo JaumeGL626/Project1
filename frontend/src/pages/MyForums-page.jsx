@@ -22,21 +22,22 @@ function MyForumPage(){
     const[newNameChat,setNewNameChat]=useState("");
     const[newNameSubForum,setnewNameSubForum]=useState("");
     const[newDescriptionSubForum,setNewDescriptionSubForum]=useState("");
-    useEffect(()=>{
-        const fetchForums= async() => {
-            try{
-                const data= await forumService.getAllMyForums();
-                setForums(data);
-                setError("")
-            }
-            catch(err){
-                console.error("Error cargant anuncis:", err.message);
-                setError(err.message);
-            }
-        };
-        fetchForums();
 
-    },[])
+
+    const fetchForums = async () => {
+        try {
+            const data = await forumService.getAllMyForums();
+            setForums(data);
+            setError("");
+        } catch (err) {
+            console.error("Error cargant anuncis:", err.message);
+            setError(err.message);
+        }
+    };
+
+    useEffect(() => {
+        fetchForums();
+    }, []);
 
     function handleIsEditing(){
         setIsEditing(!isEditing);
@@ -107,6 +108,23 @@ function MyForumPage(){
          try{
                     
             const chat= await chatService.postSubForumChat(actualForum.id,actualsubForum.id,newNameChat,"",[],"SUBFORUM");
+
+            setActualForum((prevForum) => {
+                
+                return {
+                    ...prevForum,
+                    subForums: prevForum.subForums.map((sf) => {
+                        if (sf.id === actualsubForum.id) {
+                            return {
+                                ...sf,
+                                subChats: [...(sf.subChats || []), chat]
+                            };
+                        }
+                        return sf;
+                    })
+                };
+            });
+            await fetchForums();
             setError("");
             setActualSubForum(null);
             setNewNameChat("");
@@ -127,6 +145,23 @@ function MyForumPage(){
          try{
                     
             const subForum= await subForumService.postSubForum(actualForum.id, newNameSubForum, newDescriptionSubForum);
+
+
+            const formattedSubForum = {
+                ...subForum,
+                subChats: subForum.subChats || []
+            };
+
+            setActualForum((prevForum) => {
+
+                return {
+                    ...prevForum,
+                    subForums: [...(prevForum.subForums || []), formattedSubForum]
+                };
+            });
+
+
+            await fetchForums();
             setActualSubForum(null);
             setNewDescriptionSubForum("");
             setnewNameSubForum("");
@@ -211,8 +246,8 @@ function MyForumPage(){
        
 
         {popUpSubForum &&(
-            <div className='createSubForumPopUp' onSubmit={handlecreateSubForum}>
-                <form className='chatForm' >
+            <div className='createSubForumPopUp' >
+                <form className='chatForm' onSubmit={handlecreateSubForum}>
                     <h3> Crear un SubForum</h3>
                     <label> Nom del SubForum que vols crear:</label>
                     <input type='text' onChange={handleSubForumName}/>
