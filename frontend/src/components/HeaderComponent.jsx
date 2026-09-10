@@ -23,6 +23,10 @@ function Header(){
         navigate("/announcements/my")
         
     }
+    function handleMyForums(){
+        setMenuOpen(false);
+        navigate("/forums/my")
+    }
 
     return(
         <header className="headerHomePage">
@@ -54,6 +58,9 @@ function Header(){
                             </li>
                             <li onClick={handleMyAnnouncements}>
                                 Mis publicaciones
+                            </li>
+                            <li onClick={handleMyForums}>
+                                Mis forums
                             </li>
                         </ul>
                         

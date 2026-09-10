@@ -28,7 +28,7 @@ public class SubForumController {
         return ResponseEntity.status(HttpStatus.OK).body(subForumResponseList);
 
     }
-    @PutMapping("/forums/{forumId}/subForum/{subForumId}")
+    @PutMapping("/forums/{forumId}/{subForumId}")
     public ResponseEntity<SubForumResponse> putSubForum(@RequestHeader("Authorization") String authHeader, @PathVariable Long subForumId, @Valid @RequestBody SubForumRequest request){
         String token = authHeader.replace("Bearer ", "");
         String email= jwtService.extractUsername(token);

@@ -25,8 +25,8 @@ function MyAnnouncementPage(){
                         console.error("Error cargant anuncis:", err.message);
                         setError(err.message);
                     }
-                };
-                fetchAnnouncements();
+            };
+            fetchAnnouncements();
     },[])
 
     function handleIsEditing(){

@@ -48,31 +48,39 @@ function SpecificForumPage(){
 
 
     
-        <div className="subForums">
-            <h2>{forum?.name} </h2>
-            <hr/>
-            {forum?.subForums && forum.subForums.length > 0 ?(
-                forum.subForums.map((sub) =>(
-                <div className="subForumList" key={sub.id}>
-                    <h3 onClick={()=> handleSubForum(sub)}>{sub?.name}</h3>
+    <div className="subForums">
+        <h2>{forum?.name}</h2>
+        <hr/>
+    
+   
+        <div className="subForumContainerList">
+            {forum?.subForums && forum.subForums.length > 0 ? (
+                forum.subForums.map((sub) => (
+                    <div className="subForumItem" key={sub.id}>
+                        <h3 className="subForumTitle" onClick={() => handleSubForum(sub)}>
+                            {sub?.name}
+                        </h3>
 
-                    <div className="subChats">
-                        {sub?.subChats && sub.subChats.length > 0 ? (
-                            sub.subChats.map((chats)=>(
-                                <div className="subChatsList" key={chats.id}> 
-                                    <p onClick={()=> handleChatName(chats)}> {chats.name}</p> 
-                                </div>
-                           
-                            ))
-                        ): (<p> No hi ha cap chat </p>)}
+                        <div className="subChats">
+                            {sub?.subChats && sub.subChats.length > 0 ? (
+                                sub.subChats.map((chats) => (
+                                    <div className="subChatsList" key={chats.id}>
+                                        <p className="chatItem" onClick={() => handleChatName(chats)}>
+                                            {chats.name}
+                                        </p>
+                                    </div>
+                                ))
+                            ) : (
+                                <p className="noChats">No hi ha cap chat</p>
+                            )}
+                        </div>
                     </div>
-                </div>
-            
-           
                 ))
-            ):(<p>No hi ha subforums</p>)}
-       
+                )  : (
+                    <p>No hi ha subforums</p>
+                )}
         </div>
+    </div>
 
         <div className="principalBody">
             {!actualChat && !actualSubForum && (

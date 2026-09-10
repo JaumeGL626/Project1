@@ -8,6 +8,8 @@ import MyAnnouncementPage from"./pages/MyAnnouncements-page";
 import PublicUserProfile from "./pages/publicUserProfile-page";
 import ForumPage from "./pages/forum-page";
 import SpecificForumPage from "./pages/specificForum-page";
+import MyForumPage from "./pages/MyForums-page";
+
 function App() {
 
   return (
@@ -21,6 +23,7 @@ function App() {
                 <Route path="/users/public/:id" element={<PublicUserProfile/>}/>
                 <Route path="/forums" element={<ForumPage/>}/>
                 <Route path="/forums/:id" element={<SpecificForumPage/>}/>
+                <Route path="/forums/my" element={<MyForumPage/>}/>
             </Routes>
         </BrowserRouter>
     </UserProvider>

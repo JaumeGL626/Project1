@@ -4,6 +4,8 @@
     flex-direction: row;
     width: 100%;
     justify-content:space-between;
+    overflow: hidden;
+
 }
 
 hr {
@@ -20,6 +22,8 @@ hr {
     margin-top: 70px;
     border-radius: 20px;
     background-color:rgb(36, 34, 51);
+    overflow: hidden;
+    height: 85vh;
 
 }
 
@@ -30,7 +34,7 @@ width: 70%;
 
 .chatInterface{
     width: 90%;
-    height: 80vh;
+    overflow-y: auto;
     display: flex;
     justify-content: flex-end;
         align-items: flex-start;
@@ -39,8 +43,9 @@ width: 70%;
 }
 
 
-.ForumDescription{
-    
+.subForumContainerList{
+    overflow-y: auto;
+    max-height: 80vh;
 
 }
 .chatName, .subForumName{
