@@ -39,8 +39,9 @@ width: 70%;
 }
 
 
-.ForumDescription{
-    
+.subForumList{
+    overflow-y: auto;
+    max-height: 80vh;
 
 }
 .chatName, .subForumName{

@@ -4,7 +4,9 @@ import { useEffect, useState } from 'react';
 import ForumCard from '../components/ForumCard';
 import { forumService } from '../services/forumService';
 import { useNavigate } from 'react-router-dom';
-
+import '../styles/MyForum-PageStyle.css'
+import {chatService} from '../services/chatService'
+import {subForumService} from'../services/subForumService'
 function MyForumPage(){
 
     const [forums,setForums]=useState([]);
@@ -16,6 +18,10 @@ function MyForumPage(){
     const [actualForum,setActualForum]=useState(null);
     const [popUpChat,setPopUpChat]=useState(false);
     const [popUpSubForum, setPopUpSubForum]=useState(false);
+    const [actualsubForum,setActualSubForum]=useState(null);
+    const[newNameChat,setNewNameChat]=useState("");
+    const[newNameSubForum,setnewNameSubForum]=useState("");
+    const[newDescriptionSubForum,setNewDescriptionSubForum]=useState("");
     useEffect(()=>{
         const fetchForums= async() => {
             try{
@@ -51,20 +57,86 @@ function MyForumPage(){
             setError("");
             setActualForum(null);
             setEditPopUp(false);
+            await fetchForums();
         }
         catch(err){
                  setError("Error al editar forum");
         }
 
     }
+    function handleChatName(e){
+       
+        setNewNameChat(e.target.value);
+
+    }
+
+    function handleSubForumName(e){
+       
+        setnewNameSubForum(e.target.value);
+    
+
+    }
+
+     function handleSubForumDescription(e){
+       
+        setNewDescriptionSubForum(e.target.value);
+    
+
+    }
 
 
-    function handlePopUpChat(){
-        setPopUpChat(true);
+
+
+    function handlePopUpChat(subForum){
+        setPopUpChat(!popUpChat);
+        setActualSubForum(subForum);
+        setPopUpSubForum(false);
     }
 
     function handlePopUpSubForum(){
-        setPopUpSubForum(true);
+        setPopUpSubForum(!popUpSubForum);
+        setPopUpChat(false);
+
+    }
+
+    async function handleCreateChat(e) {
+        
+        e.preventDefault();
+        e.stopPropagation();
+
+         try{
+                    
+            const chat= await chatService.postSubForumChat(actualForum.id,actualsubForum.id,newNameChat,"",[],"SUBFORUM");
+            setError("");
+            setActualSubForum(null);
+            setNewNameChat("");
+            setPopUpChat(false);
+            
+            }catch(err){
+                setError("Error al crear chat");
+            }
+        
+        
+
+        
+    }
+    async function handlecreateSubForum(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+         try{
+                    
+            const subForum= await subForumService.postSubForum(actualForum.id, newNameSubForum, newDescriptionSubForum);
+            setActualSubForum(null);
+            setNewDescriptionSubForum("");
+            setnewNameSubForum("");
+            setPopUpSubForum(false);
+            
+            }catch(err){
+                setError("Error al crear subForum");
+            }
+        
+        
     }
 
 
@@ -86,7 +158,7 @@ function MyForumPage(){
         </div>
         <div className='forumEdit'>
             {editPopUp && actualForum &&(
-                 <form className='formForum' onSubmit={handleSetForum}>
+                <form className='formForum' onSubmit={handleSetForum}>
                     <h3>Editar Anunci</h3>
                     <label> Nou nom:</label>
                     <input className='inputForumTittle' type='text' value={actualTitle} onChange={(e) => setActualTitle(e.target.value)}/>
@@ -97,20 +169,20 @@ function MyForumPage(){
                         {actualForum.subForums.length> 0 ?(
                             actualForum.subForums.map((subForum)=>
                                 <div className='SubForumItem' key={subForum.id}>
-                                    <p > {subForum.name }</p>
+                                    <h2 > {subForum.name }</h2>
 
                                     {subForum.subChats.length>0  ?( subForum.subChats.map((subChat)=>
-                                    <div className='sucChatItem'>
-                                        <p key={subChat.id}>{subChat.name}</p>
+                                    <div className='sucChatItem' key={subChat.id}>
+                                        <p>{subChat.name}</p>
                                     </div>
                                          )):
                                     (<p> No hi han subchats</p>)}
-                                    <button type="button"> Afegir subchat</button>
+                                    <button type="button" onClick={() => handlePopUpChat(subForum)}> Afegir subchat</button>
                                     
                                 </div>
                             )
                         ):(<p> No hi ha subforums</p>)}
-                        <button type="button"> Afegir SubForum</button>
+                        <button type="button" onClick={ handlePopUpSubForum}> Afegir SubForum</button>
                     </div>
                     <div className='buttonFormForum'>
                         <button onClick={()=> setEditPopUp(false)} type='button' >Cancelar </button>
@@ -119,6 +191,46 @@ function MyForumPage(){
                 </form>
             )}
         </div>
+       
+        {popUpChat &&(
+        <div className='createChatPopUp'>
+            <form className='chatForm' onSubmit={handleCreateChat}>
+                <h3> Crear un chat</h3>
+                <label> Nom del chat que vols crear:</label>
+                <input type='text' onChange={handleChatName}/>
+                <div className='buttonFormChat'>
+                    <button onClick={()=> setPopUpChat(false)} type='button'> Cancelar</button>
+                    <button type='submit'> Crear</button>
+                </div>
+                
+
+            </form>
+        </div>
+        )}
+    
+       
+
+        {popUpSubForum &&(
+            <div className='createSubForumPopUp' onSubmit={handlecreateSubForum}>
+                <form className='chatForm' >
+                    <h3> Crear un SubForum</h3>
+                    <label> Nom del SubForum que vols crear:</label>
+                    <input type='text' onChange={handleSubForumName}/>
+
+                    <label> Descripcio del Suborum que vols crear:</label>
+                    <textarea className=' textAreaForum'  onChange={(e) => setNewDescriptionSubForum(e.target.value)}></textarea>
+                    <div className='buttonFormChat'>
+                        <button onClick={()=> setPopUpSubForum(false)} type='button'> Cancelar</button>
+                        <button type='submit'> Crear</button>
+                    </div>
+                
+
+                </form>
+            </div>
+
+        )}
+        
+
         
         
         

@@ -1,0 +1,75 @@
+.formForum{
+     
+     display: flex;
+     flex-direction: column;
+     border-radius: 20px;
+     border: 2px solid black;
+    padding: 3%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    gap: 9px;
+     position: fixed;
+    z-index: 100000;
+    background-color: bisque;
+    top:90px;
+    overflow-y: auto;
+    max-height: 80vh;
+}
+
+.buttonFormForum{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between
+}
+
+.textAreaForum{
+    height: 150px;
+}
+
+.SubForumItem{
+    gap: 0px;
+}
+
+
+
+.createChatPopUp{
+     
+     display: flex;
+     flex-direction: column;
+     border-radius: 20px;
+     border: 2px solid black;
+    padding: 3%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    gap: 9px;
+     position: fixed;
+    z-index: 100000;
+    background-color: bisque;
+    top:90px;
+    overflow-y: auto;
+    max-height: 80vh;
+}
+
+.createSubForumPopUp{
+       
+     display: flex;
+     flex-direction: column;
+     border-radius: 20px;
+     border: 2px solid black;
+    padding: 3%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    gap: 9px;
+     position: fixed;
+    z-index: 100000;
+    background-color: bisque;
+    top:90px;
+    overflow-y: auto;
+    max-height: 80vh;
+}
+
+.chatForm, .createSubForumPopUp{
+    display: flex;
+    flex-direction: column;
+}
